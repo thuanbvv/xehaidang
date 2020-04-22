@@ -78,8 +78,7 @@
         $scope.OrderDetails = response.Data.ModelSM_OrderDetail;
 
         $scope.createShipping();
-        if ($scope.CustomerProvinceId > 0)
-        {
+        if ($scope.CustomerProvinceId > 0) {
             $scope.getDistricts();
         }
     }
@@ -115,8 +114,7 @@
             DiscountAmount: $scope.DiscountAmount,
             CouponAmount: $scope.CouponAmount,
         };
-        if ($scope.OrderDetails.length <= 0)
-        {
+        if ($scope.OrderDetails.length <= 0) {
             alert("Chưa có hàng để thanh toán.");
             return;
         }
@@ -154,8 +152,7 @@
         if ($scope.IsOtherAddress) {
             obj.provinceId = $scope.DeliveryProvinceId;
             obj.districtId = $scope.DeliveryDistrictId;
-        }
-        else {
+        } else {
             obj.provinceId = $scope.CustomerProvinceId;
             obj.districtId = $scope.CustomerDistrictId;
         }
@@ -171,12 +168,11 @@
     }
     $scope.updateShipping = function () {
         var obj = new Object();
-        obj.ShippingRateId =$scope.ShippingRateId;
+        obj.ShippingRateId = $scope.ShippingRateId;
         if ($scope.IsOtherAddress) {
             obj.provinceId = $scope.DeliveryProvinceId;
             obj.districtId = $scope.DeliveryDistrictId;
-        }
-        else {
+        } else {
             obj.provinceId = $scope.CustomerProvinceId;
             obj.districtId = $scope.CustomerDistrictId;
         }
@@ -189,7 +185,7 @@
 
     $scope.getProvincesCompleted = function (response) {
         var sources = response.Records;
-        var first = { Id: 0, Name: "Vui lòng chọn tỉnh/thành phố" };
+        var first = {Id: 0, Name: "Vui lòng chọn tỉnh/thành phố"};
         sources.unshift(first);
         $scope.Provinces = sources;
         $scope.ProvinceDeliverys = sources;
@@ -230,14 +226,14 @@
     $scope.getDistrictsCompleted = function (response) {
         $scope.Districts = response.Records;
         if ($scope.Districts.length > 0) {
-            var first = { Id: 0, Name: "Vui lòng chọn quận/huyện" };
+            var first = {Id: 0, Name: "Vui lòng chọn quận/huyện"};
             $scope.Districts.unshift(first);
         }
     }
     $scope.getDistrictDeliverysCompleted = function (response) {
         $scope.DistrictDeliverys = response.Records;
         if ($scope.DistrictDeliverys.length > 0) {
-            var first = { Id: 0, Name: "Vui lòng chọn quận/huyện" };
+            var first = {Id: 0, Name: "Vui lòng chọn quận/huyện"};
             $scope.DistrictDeliverys.unshift(first);
         }
     }

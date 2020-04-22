@@ -14,7 +14,8 @@
         $scope.product = window["Product"];
     }
     $scope.initProductBestSlideController = function (ProductBestSlides) {
-        $scope.ProductBestSlides = window[ProductBestSlides];;
+        $scope.ProductBestSlides = window[ProductBestSlides];
+        ;
         $scope.ConfigProduct = window['ConfigProduct'];
     }
     $scope.initProductHotSlideController = function (ProductHotSlides) {

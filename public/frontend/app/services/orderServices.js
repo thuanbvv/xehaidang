@@ -6,7 +6,7 @@
     this.getPaymentMethods = function (successFunction, errorFunction) {
         ajaxService.AjaxGet("/api/order/getpaymentmethods", successFunction, errorFunction);
     };
-    
+
     this.getCart = function (successFunction, errorFunction) {
         ajaxService.AjaxGet("/api/order/getcart", successFunction, errorFunction);
     };
@@ -36,7 +36,7 @@
     this.removeItemCart = function (id, successFunction, errorFunction) {
         ajaxService.AjaxPut(id, "/api/order/removeitemcart", successFunction, errorFunction);
     };
-       
+
 }]);
 
 

@@ -1,4 +1,4 @@
-﻿var appMain = angular.module("appMain", ["summernote", "bw.paging", "ngSanitize","ngLoadingSpinner"]);
+﻿var appMain = angular.module("appMain", ["summernote", "bw.paging", "ngSanitize", "ngLoadingSpinner"]);
 appMain.config(function ($compileProvider) {
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|javascript|skype|ymsgr|tel):/);
 });

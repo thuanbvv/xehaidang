@@ -17,7 +17,7 @@
         var messageBox = formatMessage(message);
         $rootScope.alerts = [];
         $rootScope.MessageBox = messageBox;
-        $rootScope.alerts.push({ 'type': 'danger', 'msg': '' });
+        $rootScope.alerts.push({'type': 'danger', 'msg': ''});
 
     };
 
@@ -26,7 +26,7 @@
         var messageBox = formatMessage(message);
         $rootScope.alerts = [];
         $rootScope.MessageBox = messageBox;
-        $rootScope.alerts.push({ 'type': 'success', 'msg': '' });
+        $rootScope.alerts.push({'type': 'success', 'msg': ''});
     };
 
     this.RenderWarningMessage = function (message) {
@@ -34,7 +34,7 @@
         var messageBox = formatMessage(message);
         $rootScope.alerts = [];
         $rootScope.MessageBox = messageBox;
-        $rootScope.alerts.push({ 'type': 'warning', 'msg': '' });
+        $rootScope.alerts.push({'type': 'warning', 'msg': ''});
     };
 
     this.RenderInformationalMessage = function (message) {
@@ -42,7 +42,7 @@
         var messageBox = formatMessage(message);
         $rootScope.alerts = [];
         $rootScope.MessageBox = messageBox;
-        $rootScope.alerts.push({ 'type': 'info', 'msg': '' });
+        $rootScope.alerts.push({'type': 'info', 'msg': ''});
     };
 
     this.closeAlert = function (index) {
@@ -55,8 +55,7 @@
             for (var i = 0; i < message.length; i++) {
                 messageBox = messageBox + message[i] + "<br/>";
             }
-        }
-        else {
+        } else {
             messageBox = message;
         }
 

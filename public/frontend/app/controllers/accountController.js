@@ -9,9 +9,15 @@
         $scope.InValid = false;
 
         var numberOfYears = (new Date()).getYear() - 10;
-        var years = $.map($(Array(numberOfYears)), function (val, i) { return i + 1900; });
-        var months = $.map($(Array(12)), function (val, i) { return i + 1; });
-        var days = $.map($(Array(31)), function (val, i) { return i + 1; });
+        var years = $.map($(Array(numberOfYears)), function (val, i) {
+            return i + 1900;
+        });
+        var months = $.map($(Array(12)), function (val, i) {
+            return i + 1;
+        });
+        var days = $.map($(Array(31)), function (val, i) {
+            return i + 1;
+        });
 
         var isLeapYear = function () {
             var year = $scope.SelectedYear || 0;
@@ -36,7 +42,7 @@
         $scope.SelectedDay = 1;
         $scope.GenderId = 0;
 
-        $scope.Genders = [{ Id: 0, Name: "Nữ" }, { Id: 1, Name: "Nam" }];
+        $scope.Genders = [{Id: 0, Name: "Nữ"}, {Id: 1, Name: "Nam"}];
         accountService.getProvinces($scope.getProvincesCompleted, $scope.getError);
     }
     $scope.initPersonalController = function () {
@@ -45,9 +51,15 @@
         $scope.InValid = false;
 
         var numberOfYears = (new Date()).getYear() - 10;
-        var years = $.map($(Array(numberOfYears)), function (val, i) { return i + 1900; });
-        var months = $.map($(Array(12)), function (val, i) { return i + 1; });
-        var days = $.map($(Array(31)), function (val, i) { return i + 1; });
+        var years = $.map($(Array(numberOfYears)), function (val, i) {
+            return i + 1900;
+        });
+        var months = $.map($(Array(12)), function (val, i) {
+            return i + 1;
+        });
+        var days = $.map($(Array(31)), function (val, i) {
+            return i + 1;
+        });
 
         var isLeapYear = function () {
             var year = $scope.SelectedYear || 0;
@@ -67,7 +79,7 @@
         $scope.Days = days;
         $scope.Months = months;
 
-        $scope.Genders = [{ Id: 0, Name: "Nữ" }, { Id: 1, Name: "Nam" }];
+        $scope.Genders = [{Id: 0, Name: "Nữ"}, {Id: 1, Name: "Nam"}];
         accountService.getProvinces($scope.getProvinceUpdateCompleted, $scope.getError);
         accountService.getAccount($scope.getAccountCompleted, $scope.getError);
     }

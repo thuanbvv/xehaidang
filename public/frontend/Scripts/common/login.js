@@ -27,8 +27,7 @@ var rtLogin = {
                 success: function (data) {
                     if (data.Result == "OK") {
                         window.location.reload(true);
-                    }
-                    else {
+                    } else {
                         alert(data.Message);
                     }
                 },
@@ -65,14 +64,13 @@ var rtLogin = {
                 url: rtLogin.UrlAjaxRequest.Login,
                 type: 'POST',
                 async: false,
-                data: JSON.stringify({ 'model': obj }),
+                data: JSON.stringify({'model': obj}),
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
                     if (data.Result == "OK") {
                         window.location.href = "/";
-                    }
-                    else {
+                    } else {
                         alert(data.Message);
                     }
                 },
@@ -98,14 +96,13 @@ var rtLogin = {
                 url: rtLogin.UrlAjaxRequest.Login,
                 type: 'POST',
                 async: false,
-                data: JSON.stringify({ 'model': obj }),
+                data: JSON.stringify({'model': obj}),
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
                     if (data.Result == "OK") {
                         window.location.href = "/";
-                    }
-                    else {
+                    } else {
                         alert(data.Message);
                     }
                 },

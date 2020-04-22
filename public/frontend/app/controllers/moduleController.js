@@ -52,7 +52,8 @@
         $rootScope.myCart = response.Data;
     }
     $scope.initSalePolicyController = function (Shop) {
-        $scope.shop = window[Shop];;
+        $scope.shop = window[Shop];
+        ;
     }
     $scope.initAdvMenuController = function (AdvMenus) {
         $scope.AdvMenus = window[AdvMenus];

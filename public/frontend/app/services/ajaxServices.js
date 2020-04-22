@@ -3,7 +3,9 @@
         $http.post(route, data).success(function (response, status, headers, config) {
             successFunction(response, status);
         }).error(function (response) {
-            if (response.IsAuthenicated == false) { window.location = "/admin"; }
+            if (response.IsAuthenicated == false) {
+                window.location = "/admin";
+            }
             errorFunction(response);
         });
     }
@@ -11,46 +13,57 @@
         $http.put(route, data).success(function (response, status, headers, config) {
             successFunction(response, status);
         }).error(function (response) {
-            if (response.IsAuthenicated == false) { window.location = "/admin"; }
+            if (response.IsAuthenicated == false) {
+                window.location = "/admin";
+            }
             errorFunction(response);
         });
     }
     this.AjaxDelete = function (data, route, successFunction, errorFunction) {
-        $http({ method: 'DELETE', url: route, params: data }).success(function (response, status, headers, config) {
+        $http({method: 'DELETE', url: route, params: data}).success(function (response, status, headers, config) {
             successFunction(response, status);
         }).error(function (response) {
-            if (response.IsAuthenicated == false) { window.location = "/admin"; }
+            if (response.IsAuthenicated == false) {
+                window.location = "/admin";
+            }
             errorFunction(response);
         });
     }
     this.AjaxPostWithNoAuthenication = function (data, route, successFunction, errorFunction) {
-        $http.post({ method: 'POST', url: route }).success(function (response, status, headers, config) {
+        $http.post({method: 'POST', url: route}).success(function (response, status, headers, config) {
             successFunction(response, status);
         }).error(function (response) {
             errorFunction(response);
         });
     }
     this.AjaxGet = function (route, successFunction, errorFunction) {
-        $http({ method: 'GET', url: route }).success(function (response, status, headers, config) {
+        $http({method: 'GET', url: route}).success(function (response, status, headers, config) {
             successFunction(response, status);
         }).error(function (response) {
-            if (response.IsAuthenicated == false) { window.location = "/admin"; }
+            if (response.IsAuthenicated == false) {
+                window.location = "/admin";
+            }
             errorFunction(response);
         });
     }
     this.AjaxGetWithData = function (data, route, successFunction, errorFunction) {
-        $http({ method: 'GET', url: route, params: data }).success(function (response, status, headers, config) {
+        $http({method: 'GET', url: route, params: data}).success(function (response, status, headers, config) {
             successFunction(response, status);
         }).error(function (response) {
-            if (response.IsAuthenicated == false) { window.location = "/admin"; }
+            if (response.IsAuthenicated == false) {
+                window.location = "/admin";
+            }
             errorFunction(response);
         });
     }
     this.AjaxGetWithNoBlock = function (data, route, successFunction, errorFunction) {
-        $http({ method: 'GET', url: route, params: data }).success(function (response, status, headers, config) {
+        $http({method: 'GET', url: route, params: data}).success(function (response, status, headers, config) {
             successFunction(response, status);
-        }).error(function (response) {;
-            if (response.IsAuthenicated == false) { window.location = "/admin"; }
+        }).error(function (response) {
+            ;
+            if (response.IsAuthenicated == false) {
+                window.location = "/admin";
+            }
             errorFunction(response);
         });
     }

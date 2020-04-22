@@ -31,8 +31,8 @@
     .directive('attributeTags', ['$compile', function ($compile) {
 
         var template = ['<div id="{{attrs.id}}" class="{{attrs.class}}" data-ng-click="setFocus()">',
-                            '<input id="{{attrs.inputid}}" type="text" placeholder="{{attrs.placeholder}}" class="{{attrs.class}}" autocomplete="off" maxlength="{{attrs.maxlength}}" />',
-                    '</div>'];
+            '<input id="{{attrs.inputid}}" type="text" placeholder="{{attrs.placeholder}}" class="{{attrs.class}}" autocomplete="off" maxlength="{{attrs.maxlength}}" />',
+            '</div>'];
         return {
             restrict: 'E',
             scope: {
@@ -47,7 +47,7 @@
                 };
             }],
             link: function (scope, element, attrs, controller) {
-                var key = { backspace: 8, tab: 9, enter: 13, esc: 27, comma: 188 };
+                var key = {backspace: 8, tab: 9, enter: 13, esc: 27, comma: 188};
                 var attr = '';
                 scope.attrs = {
                     'id': '',
@@ -65,7 +65,6 @@
                 }
 
 
-
                 element[0].addEventListener("keydown", function (e) {
                     var keycode = e.keyCode || e.which;
                     var $element = $($(this).find('input[type="text"]')[0]);
@@ -79,8 +78,7 @@
                                 });
                                 if (findTags.length == 0) {
                                     addTag(value, $element);
-                                }
-                                else {
+                                } else {
                                     var index = scope.tags.indexOf(findTags[0]);
                                     if (index > -1) {
                                         var badge = $element.siblings('.tag:eq(' + index + ')')
@@ -90,16 +88,14 @@
                                         }, 500)
                                     }
                                 }
-                            }
-                            else {
+                            } else {
                                 addTag(value, $element);
                             }
                         }
                         $element.val('');
                         e.preventDefault();
                         $scopeApply();
-                    }
-                    else if (keycode == key.backspace && value == '') {
+                    } else if (keycode == key.backspace && value == '') {
                         var count = $element.siblings('.tag').length;
                         if (count > 0) {
                             var tag = $element.siblings('.tag:eq(' + (count - 1) + ')');
@@ -116,19 +112,16 @@
                                         $scopeApply();
                                     }
                                 }
-                            }
-                            else {
+                            } else {
                                 if (tag.find('.close').length) {
                                     tag.addClass('tag-important');
                                 }
                             }
                         }
-                    }
-                    else if (keycode == key.esc) {
+                    } else if (keycode == key.esc) {
                         $element.val('');
                         $element.siblings('.tag').removeClass('tag-important');
-                    }
-                    else {
+                    } else {
                         $element.siblings('.tag').removeClass('tag-important');
                     }
                 });
@@ -162,35 +155,35 @@
                 function createBadge(id, value, attributeId, element, flag) {
                     if (flag == true) {
 
-                        $('<span/>', { 'class': 'tag' })
-                        .data('tag', { valueId: id, value: value, attributeId: attributeId })
-                        .text(value)
-                        .insertBefore(element);
-                    }
-                    else {
-                        $('<span/>', { 'class': 'tag' })
-                        .data('tag', { valueId: id, value: value, attributeId: 0 })
-                        .text(value)
+                        $('<span/>', {'class': 'tag'})
+                            .data('tag', {valueId: id, value: value, attributeId: attributeId})
+                            .text(value)
+                            .insertBefore(element);
+                    } else {
+                        $('<span/>', {'class': 'tag'})
+                            .data('tag', {valueId: id, value: value, attributeId: 0})
+                            .text(value)
                             //close of tag button
-                        .append($('<button type="button" class="close">&times;</button>').on('click', function () {
-                            var name = $(this).parent().data('tag').value.toLowerCase();
-                            var findTags = scope.tags.filter(function (item) {
-                                return item.value.toLowerCase() === name;
-                            });
-                            if (findTags.length > 0) {
-                                var index = scope.tags.indexOf(findTags[0]);
-                                scope.tags.splice(index, 1);
-                                $(this).parent().remove();
-                                if (scope.onTag) {
-                                    scope.onTag();
+                            .append($('<button type="button" class="close">&times;</button>').on('click', function () {
+                                var name = $(this).parent().data('tag').value.toLowerCase();
+                                var findTags = scope.tags.filter(function (item) {
+                                    return item.value.toLowerCase() === name;
+                                });
+                                if (findTags.length > 0) {
+                                    var index = scope.tags.indexOf(findTags[0]);
+                                    scope.tags.splice(index, 1);
+                                    $(this).parent().remove();
+                                    if (scope.onTag) {
+                                        scope.onTag();
+                                    }
                                 }
-                            }
-                        }))
-                        .insertBefore(element);
+                            }))
+                            .insertBefore(element);
                     }
 
 
                 };
+
                 function addTag(value, element) {
                     var id = 0;
                     if (scope.suggest.length > 0) {
@@ -201,7 +194,7 @@
                             id = findValueIds[0].id;
                         }
                     }
-                    scope.tags.push({ valueId: id, value: value, attributeId: scope.parentTag.id });
+                    scope.tags.push({valueId: id, value: value, attributeId: scope.parentTag.id});
                     createBadge(id, value, 0, element);// scope.parentTag.id
                     if (scope.onTag) {
                         scope.onTag();
@@ -213,8 +206,8 @@
     .directive('tags', ['$compile', function ($compile) {
 
         var template = ['<div id="{{attrs.id}}" class="{{attrs.class}}" data-ng-click="setFocus()">',
-                            '<input id="{{attrs.inputid}}" type="text" placeholder="{{attrs.placeholder}}" class="{{attrs.class}}" autocomplete="off" maxlength="{{attrs.maxlength}}" />',
-                    '</div>'];
+            '<input id="{{attrs.inputid}}" type="text" placeholder="{{attrs.placeholder}}" class="{{attrs.class}}" autocomplete="off" maxlength="{{attrs.maxlength}}" />',
+            '</div>'];
         return {
             restrict: 'E',
             scope: {
@@ -227,7 +220,7 @@
                 };
             }],
             link: function (scope, element, attrs, controller) {
-                var key = { backspace: 8, tab: 9, enter: 13, esc: 27, comma: 188 };
+                var key = {backspace: 8, tab: 9, enter: 13, esc: 27, comma: 188};
                 var attr = '';
                 scope.attrs = {
                     'id': '',
@@ -257,8 +250,7 @@
                                 });
                                 if (findTags.length == 0) {
                                     addTag(value, $element);
-                                }
-                                else {
+                                } else {
                                     var index = scope.tags.indexOf(findTags[0]);
                                     if (index > -1) {
                                         var badge = $element.siblings('.tag:eq(' + index + ')')
@@ -268,16 +260,14 @@
                                         }, 500)
                                     }
                                 }
-                            }
-                            else {
+                            } else {
                                 addTag(value, $element);
                             }
                         }
                         $element.val('');
                         e.preventDefault();
                         $scopeApply();
-                    }
-                    else if (keycode == key.backspace && value == '') {
+                    } else if (keycode == key.backspace && value == '') {
                         var count = $element.siblings('.tag').length;
                         if (count > 0) {
                             var tag = $element.siblings('.tag:eq(' + (count - 1) + ')');
@@ -290,17 +280,14 @@
                                     scope.tags.splice(index, 1);
                                     tag.remove();
                                 }
-                            }
-                            else {
+                            } else {
                                 tag.addClass('tag-important');
                             }
                         }
-                    }
-                    else if (keycode == key.esc) {
+                    } else if (keycode == key.esc) {
                         $element.val('');
                         $element.siblings('.tag').removeClass('tag-important');
-                    }
-                    else {
+                    } else {
                         $element.siblings('.tag').removeClass('tag-important');
                     }
                 });
@@ -323,23 +310,25 @@
                         scope.$apply();
                     }
                 };
+
                 function createBadge(id, value, element) {
-                    $('<span/>', { 'class': 'tag' })
-                    .data('tag', { id: id, name: value })
-                    .text(value)
-                    .append($('<button type="button" class="close">&times;</button>').on('click', function () {
-                        var name = $(this).parent().data('tag').name.toLowerCase();
-                        var findTags = scope.tags.filter(function (item) {
-                            return item.name.toLowerCase().trim() === name.toLowerCase().trim();
-                        });
-                        if (findTags.length > 0) {
-                            var index = scope.tags.indexOf(findTags[0]);
-                            scope.tags.splice(index, 1);
-                            $(this).parent().remove();
-                        }
-                    }))
-                    .insertBefore(element);
+                    $('<span/>', {'class': 'tag'})
+                        .data('tag', {id: id, name: value})
+                        .text(value)
+                        .append($('<button type="button" class="close">&times;</button>').on('click', function () {
+                            var name = $(this).parent().data('tag').name.toLowerCase();
+                            var findTags = scope.tags.filter(function (item) {
+                                return item.name.toLowerCase().trim() === name.toLowerCase().trim();
+                            });
+                            if (findTags.length > 0) {
+                                var index = scope.tags.indexOf(findTags[0]);
+                                scope.tags.splice(index, 1);
+                                $(this).parent().remove();
+                            }
+                        }))
+                        .insertBefore(element);
                 };
+
                 function addTag(value, element) {
                     var id = 0;
                     if (scope.suggest.length > 0) {
@@ -350,7 +339,7 @@
                             id = findValueIds[0].id;
                         }
                     }
-                    scope.tags.push({ id: id, name: value });
+                    scope.tags.push({id: id, name: value});
                     createBadge(id, value, element);
                 };
             }
@@ -399,8 +388,7 @@
                     decPart = "";
                 else
                     decPart = "";
-            }
-            else {
+            } else {
                 if (setdec) {
                     if (decPart.length > 2)
                         decPart = decPart.slice(0, 2);
@@ -418,8 +406,16 @@
             require: '?ngModel',
             restrict: 'A',
             link: function (scope, element, attr, ctrl) {
-                scope.$watch(function () { return { min: attr.min } }, function () { ctrl.$setViewValue(ctrl.$viewValue); }, true);
-                scope.$watch(function () { return { max: attr.max } }, function () { ctrl.$setViewValue(ctrl.$viewValue); }, true);
+                scope.$watch(function () {
+                    return {min: attr.min}
+                }, function () {
+                    ctrl.$setViewValue(ctrl.$viewValue);
+                }, true);
+                scope.$watch(function () {
+                    return {max: attr.max}
+                }, function () {
+                    ctrl.$setViewValue(ctrl.$viewValue);
+                }, true);
 
                 var minValidator = function (value) {
                     var min = scope.$eval(attr.min) || 0;
@@ -525,8 +521,7 @@
                 ctrl.$formatters.unshift(function (a) {
                     if (attrs.number == 'empty' && ctrl.$modelValue == '') {
                         return ctrl.$modelValue;
-                    }
-                    else {
+                    } else {
                         if (isNaN(ctrl.$modelValue)) return $filter('number')(ctrl.$modelValue)
                         return $filter('number')(Math.round(ctrl.$modelValue, 0))
                     }
@@ -583,8 +578,7 @@
                                 controller.$setViewValue(elm.autoNumeric('get'));
                             });
                         });
-                    }
-                    else {
+                    } else {
                         // Listen for changes to value changes and re-render element.
                         // Useful when binding to a readonly input field.
                         if (isTextInput) {
@@ -628,7 +622,7 @@
                     } else if ($attr.slimscrollOption) {
                         option = $scope.$eval($attr.slimscrollOption);
                     }
-                    $($elem).slimScroll({ destroy: true });
+                    $($elem).slimScroll({destroy: true});
                     $($elem).slimScroll(option);
                 };
 
@@ -706,14 +700,14 @@
                 };
             },
             template:
-              '<div class="row-fluid">' +
                 '<div class="row-fluid">' +
-                  '<div class="nav nav-tabs" ng-transclude></div>' +
+                '<div class="row-fluid">' +
+                '<div class="nav nav-tabs" ng-transclude></div>' +
                 '</div>' +
                 '<div class="row-fluid">' +
-                  '<ng-include src="templateUrl"></ng-include>' +
+                '<ng-include src="templateUrl"></ng-include>' +
                 '</div>' +
-              '</div>'
+                '</div>'
         };
     })
     .directive('lazytab', function () {
@@ -745,8 +739,8 @@
                 });
             },
             template:
-              '<li ng-class="{active: selected}">' +
+                '<li ng-class="{active: selected}">' +
                 '<a href="" ng-click="select()"><i class="blue bigger-120" ng-class="icon"></i> <span class="hidden-640">{{ title }}</span></a>' +
-              '</li>'
+                '</li>'
         };
     });

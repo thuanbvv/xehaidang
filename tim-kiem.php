@@ -1,29 +1,28 @@
 <?php
-    require_once __DIR__ . "/autoload/autoload.php";
-    $sql     = "SELECT * FROM product WHERE 1";
-    $keyword = '';
-    if (isset($_GET['k'])) {
-        $keyword = $_GET['k'];
-        $sql     .= " AND name LIKE '%$keyword%' ";
+require_once __DIR__ . "/autoload/autoload.php";
+$sql = "SELECT * FROM product WHERE 1";
+$keyword = '';
+if (isset($_GET['k'])) {
+    $keyword = $_GET['k'];
+    $sql .= " AND name LIKE '%$keyword%' ";
+}
+
+if (isset($_GET['price'])) {
+    $price = $_GET['price'];
+    if ($price == 1) {
+        $sql .= " AND price <  100000000 ";
+    } elseif ($price == 2) {
+        $sql .= ' AND price BETWEEN  100000000 AND 300000000';
+    } elseif ($price == 3) {
+        $sql .= ' AND price BETWEEN  300000000 AND 500000000';
+    } else {
+        $sql .= " AND price >  500000000 ";
     }
+}
 
-    if (isset($_GET['price']))
-    {
-        $price = $_GET['price'];
-        if ($price == 1) {
-			$sql .= " AND price <  100000000 ";
-        }elseif ($price == 2) {
-			$sql .= ' AND price BETWEEN  100000000 AND 300000000';
-        }elseif ($price == 3) {
-			$sql .= ' AND price BETWEEN  300000000 AND 500000000';
-		}else{
-			$sql .= " AND price >  500000000 ";
-        }
-    }
+$kqtk = $db->fetchsql($sql, $debug = false);
 
-    $kqtk = $db->fetchsql($sql, $debug = false);
-
-use autoload\Url; ?>
+?>
 <?php require_once __DIR__ . "/layouts/header.php"; ?>
     <style>
         .section-heading:before {
@@ -47,16 +46,24 @@ use autoload\Url; ?>
                                                 <h2 title="Tin tức nổi bật">Kết quả tìm kiếm</h2>
                                                 <ul style="display: flex;flex-wrap: nowrap;padding: 5px 0">
                                                     <li>
-                                                        <a style="padding: 5px;display: inline-block;" href="<?= \autoload\Url::addParams(['price' => 1]) ?>">Dưới 100 tr</a>
+                                                        <a style="padding: 5px;display: inline-block;"
+                                                           href="<?= \autoload\Url::addParams(['price' => 1]) ?>">Dưới
+                                                            100 tr</a>
                                                     </li>
                                                     <li>
-                                                        <a style="padding: 5px;display: inline-block;" href="<?= \autoload\Url::addParams(['price' => 2]) ?>">100 tr - 300 tr</a>
+                                                        <a style="padding: 5px;display: inline-block;"
+                                                           href="<?= \autoload\Url::addParams(['price' => 2]) ?>">100 tr
+                                                            - 300 tr</a>
                                                     </li>
                                                     <li>
-                                                        <a style="padding: 5px;display: inline-block;" href="<?= \autoload\Url::addParams(['price' => 3]) ?>">300 tr - 500 tr</a>
+                                                        <a style="padding: 5px;display: inline-block;"
+                                                           href="<?= \autoload\Url::addParams(['price' => 3]) ?>">300 tr
+                                                            - 500 tr</a>
                                                     </li>
                                                     <li>
-                                                        <a style="padding: 5px;display: inline-block;" href="<?= \autoload\Url::addParams(['price' => 4]) ?>">Trên 500tr</a>
+                                                        <a style="padding: 5px;display: inline-block;"
+                                                           href="<?= \autoload\Url::addParams(['price' => 4]) ?>">Trên
+                                                            500tr</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -64,11 +71,12 @@ use autoload\Url; ?>
                                     </div>
                                     <div class="row">
                                         <div id="" class="">
-											<?php foreach ($kqtk as $product) :?>
+                                            <?php foreach ($kqtk as $product) : ?>
                                                 <div class="col-md-3 article_item">
                                                     <div class="article_img">
                                                         <a href="chi-tiet-san-pham.php?id= <?php echo $product['id'] ?>">
-                                                            <img src="public/uploads/product/<?php echo $product['thunbar'] ?>" class="" >
+                                                            <img src="public/uploads/product/<?php echo $product['thunbar'] ?>"
+                                                                 class="">
                                                         </a>
                                                     </div>
                                                     <div class="article_content clearfix">
@@ -78,10 +86,11 @@ use autoload\Url; ?>
                                                             </h4>
                                                         </div>
                                                         <a class="readmore" href="chi-tiet-san-pham.php">Xem chi tiết<i
-                                                                    class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                                                                    class="fa fa-angle-double-right"
+                                                                    aria-hidden="true"></i></a>
                                                     </div>
                                                 </div>
-											<?php endforeach; ?>
+                                            <?php endforeach; ?>
                                         </div>
                                     </div>
                                 </section>

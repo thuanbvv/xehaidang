@@ -16,7 +16,7 @@
                     </div>
                     <div class="row">
                         <div id="" class="">
-							<?php foreach ($listproduct7 as $item) : ?>
+                            <?php foreach ($listproduct7 as $item) : ?>
                                 <div style="border-bottom: 0px;" class="col-md-3 article_item">
                                     <div class="article_img">
                                         <img src="public/uploads/product/<?php echo $item['thunbar'] ?>" alt=""
@@ -41,7 +41,8 @@
                                         <div class="des">
                                             <div style="display: flex;justify-content: space-between;border-top: 1px solid #dedede;padding-top: 10px;margin-top: 10px">
                                                 <div style="width: 50%">
-                                                    <img style="width: 20px;margin-right: 10px;" src="public/frontend/Images/ic-fuel.png" />
+                                                    <img style="width: 20px;margin-right: 10px;"
+                                                         src="public/frontend/Images/ic-fuel.png"/>
                                                     <span>Xăng</span>
                                                 </div>
                                                 <div style="width: 50%;text-align: right">
@@ -52,7 +53,8 @@
 
                                             <div style="display: flex;justify-content: space-between;padding: 10px 0">
                                                 <div style="width: 50%">
-                                                    <img style="width: 20px;margin-right: 10px;" src="public/frontend/Images/piston.png">
+                                                    <img style="width: 20px;margin-right: 10px;"
+                                                         src="public/frontend/Images/piston.png">
                                                     <span>2L</span>
                                                 </div>
                                                 <div style="width: 50%;text-align: right">
@@ -60,14 +62,15 @@
                                                     <span style="width: 50px;display: inline-block">7 Chổ</span>
                                                 </div>
                                             </div>
-<!--                                            <p>GHI CHÚ</p>-->
-<!--                                            <p>--><?//= $item['note'] ?><!--</p>-->
+                                            <!--                                            <p>GHI CHÚ</p>-->
+                                            <!--                                            <p>-->
+                                            <? //= $item['note'] ?><!--</p>-->
                                         </div>
                                         <a class="readmore" href="chi-tiet-san-pham.php?id=<?php echo $item['id'] ?>">Xem
                                             chi tiết<i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
                                     </div>
                                 </div>
-							<?php endforeach; ?>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 </section>
@@ -87,7 +90,7 @@
                     </div>
                     <div class="row">
                         <div id="" class="">
-							<?php foreach ($listproduct4 as $item) : ?>
+                            <?php foreach ($listproduct4 as $item) : ?>
                                 <div style="border-bottom: 0px;" class="col-md-3 article_item">
                                     <div class="article_img">
                                         <img src="public/uploads/product/<?php echo $item['thunbar'] ?>" alt=""
@@ -112,7 +115,8 @@
                                         <div class="des">
                                             <div style="display: flex;justify-content: space-between;border-top: 1px solid #dedede;padding-top: 10px;margin-top: 10px">
                                                 <div style="width: 50%">
-                                                    <img style="width: 20px;margin-right: 10px;" src="public/frontend/Images/ic-fuel.png" />
+                                                    <img style="width: 20px;margin-right: 10px;"
+                                                         src="public/frontend/Images/ic-fuel.png"/>
                                                     <span>Xăng</span>
                                                 </div>
                                                 <div style="width: 50%;text-align: right">
@@ -123,7 +127,8 @@
 
                                             <div style="display: flex;justify-content: space-between;padding: 10px 0">
                                                 <div style="width: 50%">
-                                                    <img style="width: 20px;margin-right: 10px;" src="public/frontend/Images/piston.png">
+                                                    <img style="width: 20px;margin-right: 10px;"
+                                                         src="public/frontend/Images/piston.png">
                                                     <span>2L</span>
                                                 </div>
                                                 <div style="width: 50%;text-align: right">
@@ -131,14 +136,15 @@
                                                     <span style="width: 50px;display: inline-block">7 Chổ</span>
                                                 </div>
                                             </div>
-<!--                                            <p>GHI CHÚ</p>-->
-<!--                                            <p>--><?//= $item['note'] ?><!--</p>-->
+                                            <!--                                            <p>GHI CHÚ</p>-->
+                                            <!--                                            <p>-->
+                                            <? //= $item['note'] ?><!--</p>-->
                                         </div>
                                         <a class="readmore" href="chi-tiet-san-pham.php?id=<?php echo $item['id'] ?>">Xem
                                             chi tiết<i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
                                     </div>
                                 </div>
-							<?php endforeach; ?>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 </section>
@@ -384,11 +390,11 @@
                             <a data-slide="next" href="#Carousel" class="right carousel-control">›</a>
                         </div><!--.Carousel-->
                         <script type="text/javascript">
-							$(document).ready(function () {
-								$('#Carousel').carousel({
-									interval: 5000
-								})
-							});
+                            $(document).ready(function () {
+                                $('#Carousel').carousel({
+                                    interval: 5000
+                                })
+                            });
                         </script>
                     </div>
                 </div>
