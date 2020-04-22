@@ -100,7 +100,7 @@ function postInput($string)
 
 function base_url()
 {
-    return $url = "http://xehaidang.trungphu/";
+    return $url = "http://localhost/xehaidang/";
 }
 
 function public_admin()
@@ -212,6 +212,37 @@ function sale($number)
         return 10;
     }
 
+}
+
+/**
+ * @param $_SESSION
+ * @param $db
+ * @param $product_id
+ * @return int: -1:chua login/1:fail/0:success
+ */
+function add_to_cart($db, $product_id){
+    if (!isset($_SESSION['name_id'])) {
+//        echo " <script>alert(' Bạn phải đăng nhập');location.href='index.php' </script> ";
+        return -1;
+    };
+
+    $status = 0;
+    try{
+        $product = $db->fetchID("product", $product_id);
+
+        if (!isset($_SESSION['cart'][$product_id])) {
+            $_SESSION['cart'][$product_id]['name'] = $product['name'];
+            $_SESSION['cart'][$product_id]['thunbar'] = $product['thunbar'];
+            $_SESSION['cart'][$product_id]['qty'] = 1;
+            $_SESSION['cart'][$product_id]['price'] = ((100 - $product['sale']) * $product['price']) / 100;
+        } else {
+            $_SESSION['cart'][$product_id]['qty'] += 1;
+        }
+    }catch (Exception $e){
+        $status = 1;
+    }
+
+    return $status;
 }
 
 

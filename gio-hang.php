@@ -70,7 +70,7 @@ if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
                     <div class="col-md-9 bor">
                     </div>
                     <section class="box-main1">
-                        <h3 class="title-main "><a href=""> Xe của bạn</a></h3>
+<!--                        <h3 class="title-main "><a href=""> Xe của bạn</a></h3>-->
                         <?php if (isset($_SESSION['success'])): ?>
                             <div class="alert alert-success">
                                 <strong></strong> <?php echo $_SESSION['success'];
@@ -93,23 +93,24 @@ if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
                             <?php $stt = 1;
                             foreach ($_SESSION['cart'] as $key => $value): ?>
                                 <tr>
-                                    <td><?php echo $stt ?></td>
+                                    <td ><?php echo $stt ?></td>
                                     <td><?php echo $value['name'] ?></td>
                                     <td>
                                         <img src="public/uploads/product/<?php echo $value['thunbar'] ?>" width="80px"
                                              height="100px" alt="">
                                     </td>
                                     <td>
-                                        <input type="number" name="qty" value="<?php echo $value['qty'] ?>"
-                                               class="form-control" id="qty" min="0">
+                                        <?php echo $value['qty'] ?>
                                     </td>
+<!--                                    <td>-->
+<!--                                        < type="number" name="qty" value="--><?php //echo $value['qty'] ?><!--"-->
+<!--                                               class="form-control" id="qty" min="0" data-key=--><?php //echo $key ?><!-->-->
+<!--                                    </td>-->
                                     <td><?php echo formatPrice($value['price']) ?></td>
                                     <td><?php echo formatPrice($value['price'] * $value['qty']) ?></td>
                                     <td>
-                                        <a href="remote.php?key=<?php echo $key ?>" class="btn btn-xs btn-danger"><i
-                                                    class="fa fa-remove"></i> Gỡ</a>
-                                        <a href="" class="=btn btn-xs btn-info updatecart"
-                                           data-key=<?php echo $key ?>><i class="fa fa-refresh"></i> Cập nhật</a>
+                                        <button href="remote.php?key=<?php echo $key ?>&action=0" class="btn btn-xs btn-danger"><i
+                                                    class="fa fa-remove"></i> Bỏ</button>
                                     </td>
                                 </tr>
                                 <?php $sum += $value['price'] * $value['qty'];
@@ -123,14 +124,16 @@ if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
                                 <li class="list-group-item">
                                     <h3>Thông tin đặt xe</h3>
                                 </li>
-                                <li class="list-group-item">
-                                    <span class="badge"><?php echo $value['name'] ?></span>
-                                    Tên xe
-                                </li>
-                                <li class="list-group-item">
-                                    <span class="badge"><?php echo $value['qty'] ?></span>
-                                    Số ngày
-                                </li>
+<!--                                <li class="list-group-item" style="height: auto">-->
+<!--                                    --><?php //foreach ($_SESSION['cart'] as $key => $value): ?>
+<!--                                        <span class="badge">--><?php //echo $value['name'] ?><!--</span>-->
+<!--                                            Tên xe-->
+<!--                                        --><?php //$stt++; endforeach ?>
+<!--                                </li>-->
+<!--                                <li class="list-group-item">-->
+<!--                                    <span id=""class="badge" >--><?php //echo $value['qty'] ?><!--</span>-->
+<!--                                    Số ngày-->
+<!--                                </li>-->
                                 <li class="list-group-item">
                                     <span class="badge"><?php echo formatPrice($_SESSION['tongtien']) ?></span>
                                     Số tiền
@@ -143,8 +146,8 @@ if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
                                 </li>
 
                                 <li class="list-group-item">
-                                    <a href="index.php" class="btn btn-success">Trả xe</a>
-                                    <a href="thanh-toan.php" class="btn btn-success">Đặt xe</a>
+                                    <button onclick="location.href='index.php'" type="submit" class="btn btn-danger">Trả xe</button>
+                                    <button onclick="location.href='thanh-toan.php'" class="btn btn-success">Đặt xe</button>
                                 </li>
                             </ul>
                         </div>
@@ -159,6 +162,13 @@ if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
 </div>
 <!--hiển thị menu TRANG INDEX.PHP-->
 <script type="text/javascript">
+
+    // function updateQuantity(input_field){;
+    //     $key = "#btn-update-"+ input_field;
+    //     $currentValue = $("#qty-" + input_field).val()
+    //     $($key).attr("href","remote.php?key=" + input_field + "&action=1&qty=" + $currentValue);
+    // }
+
     $(document).ready(function () {
         $(".menu-quick-select ul").hide();
         $(".menu-quick-select").hover(function () {

@@ -58,7 +58,7 @@ $products = $db->fetchsql($sql, $debug = false);
                                             <div class="col-md-3 article_item">
                                                 <div class="article_img">
                                                     <a href="chi-tiet-san-pham.php?id= <?php echo $product['id'] ?>">
-                                                        <img src="public/uploads/product/<?php echo $product['thunbar'] ?>"
+                                                        <img style='width:220px; height: 220px' src="public/uploads/product/<?php echo $product['thunbar'] ?>"
                                                              class="">
                                                     </a>
                                                 </div>
@@ -68,7 +68,7 @@ $products = $db->fetchsql($sql, $debug = false);
                                                             <a href="chi-tiet-san-pham.php?id= <?php echo $product['id'] ?>"> <?php echo $product['name']; ?></a>
                                                         </h4>
                                                     </div>
-                                                    <a class="readmore" href="chi-tiet-san-pham.php">Xem chi tiết<i
+                                                    <a class="readmore" href="chi-tiet-san-pham.php?id= <?php echo $product['id'] ?>">Xem chi tiết<i
                                                                 class="fa fa-angle-double-right" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>

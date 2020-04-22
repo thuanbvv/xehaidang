@@ -134,7 +134,7 @@
 </div>
 <div style="display: none;" id="loading-mask">
     <div id="loading_mask_loader" class="loader">
-        <img alt="Loading..." src="Images/ajax-loader-main.gif"/>
+        <img alt="Loading..." src="public/frontend/Images/ajax-loader-main.gif"/>
         <div>
             Please wait...
         </div>

@@ -8,17 +8,18 @@ $data =
 $error = [];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($data['email'] == '') {
-        $error['email'] = "Email không được để chống";
+        $error['email'] = "Email không được để trống";
     }
     if ($data['password'] == '') {
-        $error['password'] = "Mật khẩu không được để chống";
+        $error['password'] = "Mật khẩu không được để trống";
     }
     if (empty($error)) {
         $is_check = $db->fetchOne("users", "email= '" . $data['email'] . "' AND password = '" . MD5($data['password']) . "' ");
         if ($is_check != NULL) {
             $_SESSION['name_user'] = $is_check['name'];
             $_SESSION['name_id'] = $is_check['id'];
-            echo " <script>alert(' Đăng nhập thành công');location.href='index.php' </script> ";
+            $redirect_location = "index.php";
+            echo " <script>alert(' Đăng nhập thành công ');location.href='$redirect_location' </script> ";
         } else {
             $_SESSION['error'] = "Đăng nhập thất bại";
         }

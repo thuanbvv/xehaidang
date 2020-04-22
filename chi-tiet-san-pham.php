@@ -27,34 +27,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo " <script>alert(' Đăng nhập để đặt xe');location.href='dang-nhap.php' </script> ";
     }
 
+    $pick_begin = postInput("time_start");
+    $pick_end = postInput("time_stop");
+
     // Check xe đã đặt hay chưa
-    $transaction = $db->fetchOne('transaction', ' product_id =  ' . $id . ' and status != 2 ');
+    $transaction = $db->fetchOne('transaction', ' product_id =  ' . $id . ' and status != 2 and ((time_start <= \''
+        .$pick_begin. '\' and time_stop >= \'' .$pick_end. '\') or ( time_start >= \'' . $pick_begin . '\' and time_start <= \'' . $pick_end
+        . '\') or (time_stop >= \'' . $pick_begin . '\' and time_stop <= \'' .$pick_end. '\')) ');
+
     if ($transaction) {
-        echo " <script>alert(' Xe đã có người đặt xin vui lòng đặt xe khác ');window.location.href = 'index.php' </script> ";
-    }
+        $from_time = $transaction['time_start'];
+        $to_time = $transaction['time_stop'];
+        echo " <script>alert(' Xe đã có người đặt trong khoảng thời gian ' + `$from_time` + ' đến ' +  `$to_time` +   '. Xin vui lòng đặt xe khác hoặc chọn lại thời gian'); window.location.href = 'index.php' </script> ";
+    }else{
+        $data =
+            [
+                "time_start" => postInput('time_start'),
+                "time_stop" => postInput('time_stop'),
+                "product_id" => postInput('id'),
+                "type" => postInput('type'),
+                "amount" => postInput('price')
+            ];
 
-    $data =
-        [
-            "time_start" => postInput('time_start'),
-            "time_stop" => postInput('time_stop'),
-            "product_id" => postInput('id'),
-            "type" => postInput('type'),
-            "amount" => postInput('price')
-        ];
+        $errors = [];
+        if (postInput('time_start') == '') {
+            $errors['time_start'] = "Mời bạn nhập đầy đủ ngày nhận xe";
+        }
+        if (postInput('time_stop') == '') {
+            $errors['time_stop'] = "Mời bạn nhập đầy đủ ngày trả xe";
+        }
 
-    $errors = [];
-    if (postInput('time_start') == '') {
-        $errors['time_start'] = "Mời bạn nhập đầy đủ ngày nhận xe";
-    }
-    if (postInput('time_stop') == '') {
-        $errors['time_stop'] = "Mời bạn nhập đầy đủ ngày trả xe";
-    }
 
-    if (empty($errors)) {
-        $data['users_id'] = $_SESSION['name_id'];
-        $id_insert = $db->insert("transaction", $data);
-        if ($id_insert > 0) {
-            echo " <script>alert(' Đặt xe thành công');location.href='index.php' </script> ";
+        $datetime1 = new DateTime(date('Y-m-d',strtotime(postInput('time_start'))));
+        $datetime2 = new DateTime(date('Y-m-d',strtotime(postInput('time_stop'))));
+        $interval = $datetime1->diff($datetime2);
+
+        if ($interval->d > 0){
+            $errors['time_stop'] = "Ngày trả xe phải sau ngày mượn xe";
+        }
+
+        if (empty($errors)) {
+            $data['users_id'] = $_SESSION['name_id'];
+            $id_insert = $db->insert("transaction", $data);
+            if ($id_insert > 0) {
+                $push_cart_status = add_to_cart($db, $id);
+                if ($push_cart_status == 0){
+                    echo " <script>alert(' Đặt xe thành công');location.href='gio-hang.php' </script> ";
+                }else if ($push_cart_status == 1){
+                    echo " <script>alert(' Có lỗi khi đặt xe');location.href='index.php' </script> ";
+                }else{
+                    echo " <script>alert(' Bạn cần login trước để thực hiện hành động này');location.href='dang-nhap.php' </script> ";
+                }
+            }
         }
     }
 }
@@ -215,14 +239,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                             <div class="form-group position-relative form-group">
                                 <label class=" pt-2">Thời gian nhận xe</label>
-                                <input class="form-control" name="time_start" type="date" data-date-format="yyyy/dd/mm">
+                                <input id = "time_start_input" class="form-control" name="time_start" type="date"
+                                       onchange="update_day_count()" data-date-format="yyyy/dd/mm">
                                 <?php if (isset($errors['time_start'])) : ?>
                                     <span style="color: red"><?= $errors['time_start'] ?></span>
                                 <?php endif; ?>
                             </div>
                             <div class="form-group position-relative form-group">
                                 <label class=" pt-2">Thời gian trả xe</label>
-                                <input class="form-control" name="time_stop" type="date" data-date-format="yyyy/dd/mm">
+                                <input id = "time_stop_input" class="form-control" name="time_stop" type="date"
+                                       onchange="update_day_count()" data-date-format="yyyy/dd/mm">
                                 <?php if (isset($errors['time_stop'])) : ?>
                                     <span style="color: red"><?= $errors['time_stop'] ?></span>
                                 <?php endif; ?>
@@ -243,13 +269,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="form-group mb-none position-relative form-group">
                                 <label class="pt-2">CHI TIẾT GIÁ</label>
                                 <p style="color: red; font-weight: bold;" class="form-control-static p-none">Đơn giá
-                                    ngày <span><?php echo formatPrice($dsproductId['price']) ?> vnđ</span></p>
-                                <p class="form-control-static pt-none">Ngày: <span>0 ngày</span></p>
+                                    ngày <span><span id = "price"><?php echo formatPrice($dsproductId['price']) ?></span> vnđ</span></p>
+                                <p style="color: red; font-weight: bold;" class="form-control-static p-none">Sales
+                                    ngày <span><span id = "sale"><?php echo formatPrice($dsproductId['sale']) ?></span> %</span></p>
+                                <p class="form-control-static pt-none">Ngày: <span id = "day_count_span">1 ngày</span></p>
                             </div>
 
                             <div class="sum ">
                                 <p class="pull-left text-left">TỔNG</p>
-                                <p style="color:red; font-weight: bold;" class="pull-right text-right"> 0 vnđ</p>
+                                <p style="color:red; font-weight: bold;" class="pull-right text-right">
+                                    <span id = "total_amount">1 vnđ</span>
+                                </p>
                             </div>
                             <div class="form-group mb-none position-relative form-group">
                                 <br>
@@ -266,11 +296,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <span class="form-control-static pt-none">- Nếu khách muốn thanh toán ngay vui lòng đặt xe, sẽ có nhận viên liên hệ tư vấn thêm phụ trội</span>
                             </div>
 
-                            <div class="btn btn-block mt-md"
-                                 style="background: linear-gradient(to right, rgb(15, 149, 155), rgb(6, 74, 80)); color: rgb(255, 255, 255); padding: 14px 1.2rem; border: none; min-width: 150px; font-weight: 500;">
-                                <p><a href="addcart.php?id=<?php echo $dsproductId['id'] ?>"><i
-                                                class="fa fa-shopping-basket"> </i></a></p>
-                            </div>
+<!--                            <div class="btn btn-block mt-md"-->
+<!--                                 style="background: linear-gradient(to right, rgb(15, 149, 155), rgb(6, 74, 80)); color: rgb(255, 255, 255); padding: 14px 1.2rem; border: none; min-width: 150px; font-weight: 500;">-->
+<!--                                <p><a href="addcart.php?id=--><?php //echo $dsproductId['id'] ?><!--"><i-->
+<!--                                                class="fa fa-shopping-basket"> </i></a></p>-->
+<!--                            </div>-->
                         </form>
                     </div>
                 </div>
@@ -468,18 +498,62 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <?php require_once __DIR__ . "/layouts/footer.php"; ?>
 
-<!--hiển thị menu TRANG INDEX.PHP-->
 <script type="text/javascript">
+    Date.prototype.toDateInputValue = (function() {
+        var local = new Date(this);
+        local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+        return local.toJSON().slice(0,10);
+    });
 
     $(document).ready(function () {
-        console.log('1111');
+
         $(".menu-quick-select ul").hide();
         $(".menu-quick-select").hover(function () {
             $(".menu-quick-select ul").show();
         }, function () {
             $(".menu-quick-select ul").hide();
-        });
-
+        })
+        reset_time();
+        update_day_count();
     });
 
+    function reset_time() {
+        $('#time_start_input').val(new Date().toDateInputValue());
+        $('#time_stop_input').val(new Date().toDateInputValue());
+    }
+
+    function formatMoney(amount, decimalCount = 0, decimal = ".", thousands = ",") {
+        try {
+            decimalCount = Math.abs(decimalCount);
+            decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
+
+            const negativeSign = amount < 0 ? "-" : "";
+
+            let i = parseInt(amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)).toString();
+            let j = (i.length > 3) ? i.length % 3 : 0;
+
+            return negativeSign + (j ? i.substr(0, j) + thousands : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) + (decimalCount ? decimal + Math.abs(amount - i).toFixed(decimalCount).slice(2) : "");
+        } catch (e) {
+            console.log(e)
+        }
+    };
+
+    function update_day_count(){
+        let $datetime1 = new Date($("#time_start_input").val());
+        let $datetime2 = new Date($("#time_stop_input").val());
+        let $interval = ($datetime2.getTime() - $datetime1.getTime()) / (1000 * 3600 * 24) + 1;
+        // if ($interval < 1){
+        //     reset_time();
+        //     $interval = 1;
+        // }
+        let $sale = Number('<?php echo $dsproductId["sale"]; ?>');
+        let $price = Number('<?php echo $dsproductId["price"]; ?>');
+        let $total_amount = $interval * ((100 - $sale) * $price) / 100;
+
+
+        $("#day_count_span").text($interval + " ngày");
+        $("#total_amount").text(formatMoney($total_amount) + " vnđ");
+    }
+
 </script>
+<!--hiển thị menu TRANG INDEX.PHP-->

@@ -19,7 +19,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             "note" => postInput("note")
 
         ];
-    _debug($data1);
+
+
+
+//    _debug($data1);
+
+
 
 }
 
