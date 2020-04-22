@@ -103,8 +103,8 @@ if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
                                         <input type="number" name="qty" value="<?php echo $value['qty'] ?>"
                                                class="form-control" id="qty" min="0">
                                     </td>
-                                    <td><?php echo fomatprice($value['price']) ?></td>
-                                    <td><?php echo fomatprice($value['price'] * $value['qty']) ?></td>
+                                    <td><?php echo formatPrice($value['price']) ?></td>
+                                    <td><?php echo formatPrice($value['price'] * $value['qty']) ?></td>
                                     <td>
                                         <a href="remote.php?key=<?php echo $key ?>" class="btn btn-xs btn-danger"><i
                                                     class="fa fa-remove"></i> Gỡ</a>
@@ -132,13 +132,13 @@ if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
                                     Số ngày
                                 </li>
                                 <li class="list-group-item">
-                                    <span class="badge"><?php echo fomatprice($_SESSION['tongtien']) ?></span>
+                                    <span class="badge"><?php echo formatPrice($_SESSION['tongtien']) ?></span>
                                     Số tiền
                                 </li>
 
                                 <li class="list-group-item">
                                     <span class="badge"><?php $_SESSION['total'] = $_SESSION['tongtien'];
-                                        echo fomatprice($_SESSION['total']) ?></span>
+                                        echo formatPrice($_SESSION['total']) ?></span>
                                     Tổng tiền thanh toán
                                 </li>
 

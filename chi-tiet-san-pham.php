@@ -268,7 +268,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                             <div class="btn btn-block mt-md"
                                  style="background: linear-gradient(to right, rgb(15, 149, 155), rgb(6, 74, 80)); color: rgb(255, 255, 255); padding: 14px 1.2rem; border: none; min-width: 150px; font-weight: 500;">
-                                <p><a href="addcart.php?id=<?php echo $item['id'] ?>"><i
+                                <p><a href="addcart.php?id=<?php echo $dsproductId['id'] ?>"><i
                                                 class="fa fa-shopping-basket"> </i></a></p>
                             </div>
                         </form>
