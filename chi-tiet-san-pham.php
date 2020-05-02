@@ -60,9 +60,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $datetime1 = new DateTime(date('Y-m-d',strtotime(postInput('time_start'))));
         $datetime2 = new DateTime(date('Y-m-d',strtotime(postInput('time_stop'))));
-        $interval = $datetime1->diff($datetime2);
+//        $interval = $datetime1->diff($datetime2,true);
+        $interval = date_diff($datetime1, $datetime2);
 
-        if ($interval->d > 0){
+//        var_dump($datetime1);
+//        var_dump($datetime2);
+        var_dump($interval->invert);
+        if ($interval->invert == 1){
             $errors['time_stop'] = "Ngày trả xe phải sau ngày mượn xe";
         }
 
@@ -79,6 +83,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo " <script>alert(' Bạn cần login trước để thực hiện hành động này');location.href='dang-nhap.php' </script> ";
                 }
             }
+        }else{
+            echo " <script>$('#car-rent')[0].reset() </script> ";
         }
     }
 }
@@ -224,7 +230,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="right-info ">
                     <div class="shadow mb-xlg p-lg">
                         <div class="pr text-center">GIÁ VÀ THỦ TỤC</div>
-                        <form class="cap form-horizontal" action="" method="POST" enctype="multipart/form-data">
+                        <form id="car-rent" class="cap form-horizontal" action="" method="POST" enctype="multipart/form-data">
 
                             <div class="form-group position-relative form-group">
                                 <label class=" text-sm-right pt-2">HÌNH THỨC NHẬN XE</label>
@@ -240,7 +246,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="form-group position-relative form-group">
                                 <label class=" pt-2">Thời gian nhận xe</label>
                                 <input id = "time_start_input" class="form-control" name="time_start" type="date"
-                                       onchange="update_day_count()" data-date-format="yyyy/dd/mm">
+                                       onchange="update_day_count()" data-date-format="yyyy/mm/dd">
                                 <?php if (isset($errors['time_start'])) : ?>
                                     <span style="color: red"><?= $errors['time_start'] ?></span>
                                 <?php endif; ?>
@@ -248,7 +254,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="form-group position-relative form-group">
                                 <label class=" pt-2">Thời gian trả xe</label>
                                 <input id = "time_stop_input" class="form-control" name="time_stop" type="date"
-                                       onchange="update_day_count()" data-date-format="yyyy/dd/mm">
+                                       onchange="update_day_count()" data-date-format="yyyy/mm/dd">
                                 <?php if (isset($errors['time_stop'])) : ?>
                                     <span style="color: red"><?= $errors['time_stop'] ?></span>
                                 <?php endif; ?>
