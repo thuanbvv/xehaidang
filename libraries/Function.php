@@ -215,12 +215,12 @@ function sale($number)
 }
 
 /**
- * @param $_SESSION
  * @param $db
  * @param $product_id
+ * @param $id_trans
  * @return int: -1:chua login/1:fail/0:success
  */
-function add_to_cart($db, $product_id){
+function add_to_cart($db, $product_id, $id_trans){
     if (!isset($_SESSION['name_id'])) {
 //        echo " <script>alert(' Bạn phải đăng nhập');location.href='index.php' </script> ";
         return -1;
@@ -235,8 +235,10 @@ function add_to_cart($db, $product_id){
             $_SESSION['cart'][$product_id]['thunbar'] = $product['thunbar'];
             $_SESSION['cart'][$product_id]['qty'] = 1;
             $_SESSION['cart'][$product_id]['price'] = ((100 - $product['sale']) * $product['price']) / 100;
+            $_SESSION['cart'][$product_id]['id_trans'] = array($id_trans);
         } else {
             $_SESSION['cart'][$product_id]['qty'] += 1;
+            $_SESSION['cart'][$product_id]['id_trans'] += $id_trans;
         }
     }catch (Exception $e){
         $status = 1;

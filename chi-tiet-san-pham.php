@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pick_end = postInput("time_stop");
 
     // Check xe đã đặt hay chưa
-    $transaction = $db->fetchOne('transaction', ' product_id =  ' . $id . ' and status != 2 and ((time_start <= \''
+    $transaction = $db->fetchOne('transaction', ' product_id =  ' . $id . ' and status != 3 and ((time_start <= \''
         .$pick_begin. '\' and time_stop >= \'' .$pick_end. '\') or ( time_start >= \'' . $pick_begin . '\' and time_start <= \'' . $pick_end
         . '\') or (time_stop >= \'' . $pick_begin . '\' and time_stop <= \'' .$pick_end. '\')) ');
 
@@ -46,7 +46,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 "time_stop" => postInput('time_stop'),
                 "product_id" => postInput('id'),
                 "type" => postInput('type'),
-                "amount" => postInput('price')
+                "amount" => postInput('price'),
+                "status" => 0,
             ];
 
         $errors = [];
@@ -73,8 +74,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (empty($errors)) {
             $data['users_id'] = $_SESSION['name_id'];
             $id_insert = $db->insert("transaction", $data);
+//            var_dump($id_insert);
             if ($id_insert > 0) {
-                $push_cart_status = add_to_cart($db, $id);
+                $push_cart_status = add_to_cart($db, $id, $id_insert);
                 if ($push_cart_status == 0){
                     echo " <script>alert(' Đặt xe thành công');location.href='gio-hang.php' </script> ";
                 }else if ($push_cart_status == 1){

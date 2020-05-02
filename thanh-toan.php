@@ -11,23 +11,30 @@ $data =
         'adress' => postInput("adress")
     ];
 
+$status = [];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data1 =
         [
             'amount' => $_SESSION['total'],
             'users_id' => $_SESSION['name_id'],
             "note" => postInput("note")
-
         ];
 
-
-
-//    _debug($data1);
-
-
-
+    $status['status'] = 'success';
 }
 
+if ($status && $status['status'] == 'success'){
+    foreach ($_SESSION['cart'] as $key => $value){
+        foreach ($value['id_trans'] as $id_tran){
+            $update = $db->update("transaction", array("status" => 1), array("id" => $id_tran, "status" => 0));
+            if ($update > 0){
+                unset($_SESSION['cart'][$key]);
+            }
+        }
+    }
+
+    echo " <script>alert(' Thanh toán thành công!'); location.href='index.php' </script> ";
+}
 
 ?>
 <?php require_once __DIR__ . "/layouts/header.php"; ?>
@@ -105,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="form-group">
                                 <label class="col-md-2 col-md-offset-1"> Tên thành viên</label>
                                 <div class="col-md-5">
-                                    <input type="text" readonly="" name="name" placeholder=" Nguyễn Minh Đăng "
+                                    <input type="text" name="name" placeholder=" Nguyễn Minh Đăng "
                                            class="form-control" value="<?php echo $data['name'] ?>">
 
                                 </div>

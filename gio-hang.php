@@ -72,7 +72,7 @@ if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
                     <section class="box-main1">
 <!--                        <h3 class="title-main "><a href=""> Xe của bạn</a></h3>-->
                         <?php if (isset($_SESSION['success'])): ?>
-                            <div class="alert alert-success">
+                            <div class="alert alert-success fadeIn">
                                 <strong></strong> <?php echo $_SESSION['success'];
                                 unset($_SESSION['success']) ?>
                             </div>
@@ -91,6 +91,7 @@ if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
                             </thead>
                             <tbody>
                             <?php $stt = 1;
+//                            var_dump($_SESSION['cart']);
                             foreach ($_SESSION['cart'] as $key => $value): ?>
                                 <tr>
                                     <td ><?php echo $stt ?></td>
@@ -102,14 +103,10 @@ if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
                                     <td>
                                         <?php echo $value['qty'] ?>
                                     </td>
-<!--                                    <td>-->
-<!--                                        < type="number" name="qty" value="--><?php //echo $value['qty'] ?><!--"-->
-<!--                                               class="form-control" id="qty" min="0" data-key=--><?php //echo $key ?><!-->-->
-<!--                                    </td>-->
                                     <td><?php echo formatPrice($value['price']) ?></td>
                                     <td><?php echo formatPrice($value['price'] * $value['qty']) ?></td>
                                     <td>
-                                        <button href="remote.php?key=<?php echo $key ?>&action=0" class="btn btn-xs btn-danger"><i
+                                        <button onclick="window.location.href='remote.php?key=<?php echo $key ?>&action=0'" class="btn btn-xs btn-danger "><i
                                                     class="fa fa-remove"></i> Bỏ</button>
                                     </td>
                                 </tr>
@@ -134,10 +131,10 @@ if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
 <!--                                    <span id=""class="badge" >--><?php //echo $value['qty'] ?><!--</span>-->
 <!--                                    Số ngày-->
 <!--                                </li>-->
-                                <li class="list-group-item">
-                                    <span class="badge"><?php echo formatPrice($_SESSION['tongtien']) ?></span>
-                                    Số tiền
-                                </li>
+<!--                                <li class="list-group-item">-->
+<!--                                    <span class="badge">--><?php //echo formatPrice($_SESSION['tongtien']) ?><!--</span>-->
+<!--                                    Số tiền-->
+<!--                                </li>-->
 
                                 <li class="list-group-item">
                                     <span class="badge"><?php $_SESSION['total'] = $_SESSION['tongtien'];
