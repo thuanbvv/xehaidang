@@ -1,40 +1,37 @@
 <?php
 require_once __DIR__ . "/autoload/autoload.php";
 
-
+$user = $_SESSION['user'];
 $data =
     [
-        'name' => postInput("name"),
-        'email' => postInput("email"),
-
-        'phone' => postInput("phone"),
-        'adress' => postInput("adress")
+        'name' => !empty(postInput("name")) ? postInput("name") : $user['name'],
+        'email' => !empty(postInput("email")) ? postInput("email") : $user['email'],
+        'phone' => !empty(postInput("phone")) ? postInput("phone") : $user['phone'],
+        'adress' => !empty(postInput("adress")) ? postInput("adress") : $user['adress'],
     ];
 
-$status = [];
+if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
+    echo " <script>alert('Giỏ hàng rỗng');location.href='index.php' </script> ";
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data1 =
         [
-            'amount' => $_SESSION['total'],
-            'users_id' => $_SESSION['name_id'],
+            "status" => 3,
             "note" => postInput("note")
         ];
-
-    $status['status'] = 'success';
-}
-
-if ($status && $status['status'] == 'success'){
-    foreach ($_SESSION['cart'] as $key => $value){
-        foreach ($value['id_trans'] as $id_tran){
-            $update = $db->update("transaction", array("status" => 1), array("id" => $id_tran, "status" => 0));
-            if ($update > 0){
-                unset($_SESSION['cart'][$key]);
-            }
-        }
+    $cart = $_SESSION['cart'];
+    $listId = [];
+    foreach($cart as $value) {
+        $id_update = $db->update('transaction', $data1, array('id' => $value['id_transaction']));
+        array_push($listId, $id_update);
     }
-
-    echo " <script>alert(' Thanh toán thành công!'); location.href='index.php' </script> ";
+    unset($_SESSION['cart']);
+    if (!empty($listId)) {
+        echo " <script>alert('Bạn đã xác nhận đặt hành thành công chúng tôi sẽ liên hệ giao xe sớm nhất có thể cho bạn');location.href='index.php' </script> ";
+    }
 }
+
 
 ?>
 <?php require_once __DIR__ . "/layouts/header.php"; ?>
@@ -45,9 +42,9 @@ if ($status && $status['status'] == 'success'){
             <div class="col-md-3">
                 <div class="menu-account">
                     <h3>
-						            <span>
-						            Tài khoản
-						            </span>
+                        <span>
+                        Tài khoản
+                        </span>
                     </h3>
                     <ul>
                         <li><a href="dang-nhap.php"><i class="fa fa-sign-in"></i> Đăng nhập</a></li>
@@ -79,7 +76,7 @@ if ($status && $status['status'] == 'success'){
                 <script src="public/frontend/app/controllers/accountController.js"></script>
                 <div class="register-content clearfix" ng-controller="accountController"
                      ng-init="initRegisterController()">
-                    <h1 class="title"><span>Thanh toán đặt xe</span></h1>
+                    <h1 class="title"><span>Xác nhận đặt xe</span></h1>
                     <div ng-if="IsError" class="alert alert-danger fade in">
                         <button data-dismiss="alert" class="close"></button>
                         <i class="fa-fw fa fa-times"></i>
@@ -112,7 +109,7 @@ if ($status && $status['status'] == 'success'){
                             <div class="form-group">
                                 <label class="col-md-2 col-md-offset-1"> Tên thành viên</label>
                                 <div class="col-md-5">
-                                    <input type="text" name="name" placeholder=" Nguyễn Minh Đăng "
+                                    <input type="text" readonly name="name" placeholder=" Nguyễn Minh Đăng "
                                            class="form-control" value="<?php echo $data['name'] ?>">
 
                                 </div>
@@ -121,7 +118,7 @@ if ($status && $status['status'] == 'success'){
                                 <label class="col-md-2 col-md-offset-1"> Email</label>
                                 <div class="col-md-5">
                                     <input type="email" name="email" placeholder=" nguyendanggh@gmail.com"
-                                           class="form-control" value="<?php echo $data['email'] ?>">
+                                           class="form-control" value="<?php echo $data['email'] ?>" readonly>
 
                                 </div>
                             </div>
@@ -129,7 +126,7 @@ if ($status && $status['status'] == 'success'){
                                 <label class="col-md-2 col-md-offset-1"> Số điện thoại</label>
                                 <div class="col-md-5">
                                     <input type="number" name="phone" placeholder=" 0962398345" class="form-control"
-                                           value="<?php echo $data['phone'] ?>">
+                                           value="<?php echo $data['phone'] ?>" readonly> 
 
                                 </div>
                             </div>
@@ -137,15 +134,15 @@ if ($status && $status['status'] == 'success'){
                                 <label class="col-md-2 col-md-offset-1"> Địa chỉ</label>
                                 <div class="col-md-5">
                                     <input type="text" name="adress" placeholder="Xuân An-Nghi Xuân-Hà Tĩnh"
-                                           class="form-control" value="<?php echo $data['adress'] ?>">
+                                           class="form-control" value="<?php echo $data['adress'] ?>" readonly>
 
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 col-md-offset-1"> Ghi chú</label>
                                 <div class="col-md-5">
-                                    <input type="text" name="adress" placeholder="Xuân An-Nghi Xuân-Hà Tĩnh"
-                                           class="form-control" value="<?php echo $data['adress'] ?>">
+                                    <input type="text" name="note" placeholder="Xuân An-Nghi Xuân-Hà Tĩnh"
+                                           class="form-control" value="">
 
                                 </div>
                             </div>

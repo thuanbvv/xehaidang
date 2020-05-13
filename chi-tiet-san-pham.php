@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pick_end = postInput("time_stop");
 
     // Check xe đã đặt hay chưa
-    $transaction = $db->fetchOne('transaction', ' product_id =  ' . $id . ' and status != 3 and ((time_start <= \''
+    $transaction = $db->fetchOne('transaction', ' product_id =  ' . $id . ' and status != 2 and ((time_start <= \''
         .$pick_begin. '\' and time_stop >= \'' .$pick_end. '\') or ( time_start >= \'' . $pick_begin . '\' and time_start <= \'' . $pick_end
         . '\') or (time_stop >= \'' . $pick_begin . '\' and time_stop <= \'' .$pick_end. '\')) ');
 
@@ -46,8 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 "time_stop" => postInput('time_stop'),
                 "product_id" => postInput('id'),
                 "type" => postInput('type'),
-                "amount" => postInput('price'),
-                "status" => 0,
+                "amount" => postInput('price')
             ];
 
         $errors = [];
@@ -61,22 +60,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $datetime1 = new DateTime(date('Y-m-d',strtotime(postInput('time_start'))));
         $datetime2 = new DateTime(date('Y-m-d',strtotime(postInput('time_stop'))));
-//        $interval = $datetime1->diff($datetime2,true);
-        $interval = date_diff($datetime1, $datetime2);
-
-//        var_dump($datetime1);
-//        var_dump($datetime2);
-        var_dump($interval->invert);
-        if ($interval->invert == 1){
+        $interval = $datetime1->diff($datetime2);
+    
+        if ($interval->d < 0){
             $errors['time_stop'] = "Ngày trả xe phải sau ngày mượn xe";
         }
 
         if (empty($errors)) {
             $data['users_id'] = $_SESSION['name_id'];
+            $data['number_day'] = $interval->d;
             $id_insert = $db->insert("transaction", $data);
-//            var_dump($id_insert);
+            
             if ($id_insert > 0) {
-                $push_cart_status = add_to_cart($db, $id, $id_insert);
+                $push_cart_status = add_to_cart($db, $id, $interval->d, $id_insert);
                 if ($push_cart_status == 0){
                     echo " <script>alert(' Đặt xe thành công');location.href='gio-hang.php' </script> ";
                 }else if ($push_cart_status == 1){
@@ -85,8 +81,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo " <script>alert(' Bạn cần login trước để thực hiện hành động này');location.href='dang-nhap.php' </script> ";
                 }
             }
-        }else{
-            echo " <script>$('#car-rent')[0].reset() </script> ";
         }
     }
 }
@@ -232,7 +226,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="right-info ">
                     <div class="shadow mb-xlg p-lg">
                         <div class="pr text-center">GIÁ VÀ THỦ TỤC</div>
-                        <form id="car-rent" class="cap form-horizontal" action="" method="POST" enctype="multipart/form-data">
+                        <form class="cap form-horizontal" action="" method="POST" enctype="multipart/form-data">
 
                             <div class="form-group position-relative form-group">
                                 <label class=" text-sm-right pt-2">HÌNH THỨC NHẬN XE</label>
@@ -248,7 +242,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="form-group position-relative form-group">
                                 <label class=" pt-2">Thời gian nhận xe</label>
                                 <input id = "time_start_input" class="form-control" name="time_start" type="date"
-                                       onchange="update_day_count()" data-date-format="yyyy/mm/dd">
+                                       onchange="update_day_count()" data-date-format="yyyy/dd/mm">
                                 <?php if (isset($errors['time_start'])) : ?>
                                     <span style="color: red"><?= $errors['time_start'] ?></span>
                                 <?php endif; ?>
@@ -256,7 +250,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="form-group position-relative form-group">
                                 <label class=" pt-2">Thời gian trả xe</label>
                                 <input id = "time_stop_input" class="form-control" name="time_stop" type="date"
-                                       onchange="update_day_count()" data-date-format="yyyy/mm/dd">
+                                       onchange="update_day_count()" data-date-format="yyyy/dd/mm">
                                 <?php if (isset($errors['time_stop'])) : ?>
                                     <span style="color: red"><?= $errors['time_stop'] ?></span>
                                 <?php endif; ?>
@@ -550,6 +544,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         let $datetime1 = new Date($("#time_start_input").val());
         let $datetime2 = new Date($("#time_stop_input").val());
         let $interval = ($datetime2.getTime() - $datetime1.getTime()) / (1000 * 3600 * 24) + 1;
+        console.log($interval);
         // if ($interval < 1){
         //     reset_time();
         //     $interval = 1;
