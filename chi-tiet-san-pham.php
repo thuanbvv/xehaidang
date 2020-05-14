@@ -40,14 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $to_time = $transaction['time_stop'];
         echo " <script>alert(' Xe đã có người đặt trong khoảng thời gian ' + `$from_time` + ' đến ' +  `$to_time` +   '. Xin vui lòng đặt xe khác hoặc chọn lại thời gian'); window.location.href = 'index.php' </script> ";
     }else{
-        $data =
-            [
-                "time_start" => postInput('time_start'),
-                "time_stop" => postInput('time_stop'),
-                "product_id" => postInput('id'),
-                "type" => postInput('type'),
-                "amount" => postInput('price')
-            ];
+        
 
         $errors = [];
         if (postInput('time_start') == '') {
@@ -57,22 +50,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $errors['time_stop'] = "Mời bạn nhập đầy đủ ngày trả xe";
         }
 
-
         $datetime1 = new DateTime(date('Y-m-d',strtotime(postInput('time_start'))));
         $datetime2 = new DateTime(date('Y-m-d',strtotime(postInput('time_stop'))));
+        $datenow1 = getDay(postInput('time_start'));
+        $datenow2 = getDay(postInput('time_stop'));
         $interval = $datetime1->diff($datetime2);
-    
+
+        
+        
+        if ($datenow1 < 0){
+            $errors['time_start'] = "Ngày nhận xe không hợp lệ";
+        }
+
+        if ($datenow2 < 0){
+            $errors['time_stop'] = "Ngày trả xe không hợp lệ";
+        }
+
         if ($interval->d < 0){
             $errors['time_stop'] = "Ngày trả xe phải sau ngày mượn xe";
         }
-
         if (empty($errors)) {
+
+            $data =
+            [
+                "time_start" => postInput('time_start'),
+                "time_stop" => postInput('time_stop'),
+                "product_id" => postInput('id'),
+                "type" => postInput('type'),
+                "amount" => intval(postInput('price'))  * intval($interval->d),
+            ];
             $data['users_id'] = $_SESSION['name_id'];
             $data['number_day'] = $interval->d;
             $id_insert = $db->insert("transaction", $data);
-            
+            $id_insert = 1;
             if ($id_insert > 0) {
-                $push_cart_status = add_to_cart($db, $id, $interval->d, $id_insert);
+                $push_cart_status = add_to_cart($db, $id, $interval->d, $id_insert, postInput('time_start'), postInput('time_stop'));
                 if ($push_cart_status == 0){
                     echo " <script>alert(' Đặt xe thành công');location.href='gio-hang.php' </script> ";
                 }else if ($push_cart_status == 1){

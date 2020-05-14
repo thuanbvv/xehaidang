@@ -7,7 +7,8 @@ $db = new Database;
 
 
 if (!isset($_SESSION['admin_id'])) {
-    header("location:/login");
+    $urlLogin = base_url(). '/login';
+    header($urlLogin);
 }
 
 define('ROOT', $_SERVER['DOCUMENT_ROOT'] . "/public/uploads/");

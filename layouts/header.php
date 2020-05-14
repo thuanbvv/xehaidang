@@ -159,7 +159,7 @@
                             <!-- Search -->
                             <div class="search_box">
                                 <div class="search_wrapper">
-                                    <form action="tim-kiem.php">
+                                    <form action="/tim-kiem.php">
                                         <input type="text" name="k" value="<?= getInput('k') ?>"
                                                class="index_input_search"/>
                                         <button class="btn_search_submit btn" type="submit"><span>  Tìm ngay</span>
@@ -185,7 +185,9 @@
                                                 <a href="dang-xuat.php"><i class="fa fa-sign-in"></i> Xin Chào
                                                     : <?= $_SESSION['name_user'] ?></a>
                                             </li>
-
+                                            <li>
+                                                <a href="gio-hang.php"><i class="fa fa-fw fa-shopping-cart"></i> Giỏ hàng
+                                            </li>
                                         <?php else : ?>
                                             <li>
                                                 <a href="dang-ky.php"><i class="fa fa-sign-in"></i> Đăng ký</a>

@@ -6,6 +6,7 @@ $sum = 0;
 if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
     echo " <script>alert('Giỏ hàng rỗng');location.href='index.php' </script> ";
 }
+//dd($_SESSION['cart']); die;
 ?>
 <?php require_once __DIR__ . "/layouts/header.php"; ?>
 <div class="main">
@@ -15,9 +16,9 @@ if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
             <div class="col-md-3">
                 <div class="menu-account">
                     <h3>
-						            <span>
-						            Tài khoản
-						            </span>
+                        <span>
+                            Tài khoản
+                        </span>
                     </h3>
                     <ul>
                         <li><a href="dang-nhap.php"><i class="fa fa-sign-in"></i> Đăng nhập</a></li>
@@ -72,7 +73,7 @@ if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
                     <section class="box-main1">
 <!--                        <h3 class="title-main "><a href=""> Xe của bạn</a></h3>-->
                         <?php if (isset($_SESSION['success'])): ?>
-                            <div class="alert alert-success fadeIn">
+                            <div class="alert alert-success">
                                 <strong></strong> <?php echo $_SESSION['success'];
                                 unset($_SESSION['success']) ?>
                             </div>
@@ -83,6 +84,8 @@ if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
                                 <th>STT</th>
                                 <th>Tên xe</th>
                                 <th>Hình ảnh</th>
+                                <th>Ngày nhận xe</th>
+                                <th>Ngày trả xe</th>
                                 <th>Số ngày</th>
                                 <th>Giá</th>
                                 <th>Tổng tiền</th>
@@ -91,7 +94,6 @@ if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
                             </thead>
                             <tbody>
                             <?php $stt = 1;
-//                            var_dump($_SESSION['cart']);
                             foreach ($_SESSION['cart'] as $key => $value): ?>
                                 <tr>
                                     <td ><?php echo $stt ?></td>
@@ -100,13 +102,15 @@ if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
                                         <img src="public/uploads/product/<?php echo $value['thunbar'] ?>" width="80px"
                                              height="100px" alt="">
                                     </td>
+                                    <td><?= $value['datetime1'] ?></td>
+                                    <td><?= $value['datetime2'] ?></td>
                                     <td>
                                         <?php echo $value['qty'] ?>
                                     </td>
                                     <td><?php echo formatPrice($value['price']) ?></td>
                                     <td><?php echo formatPrice($value['price'] * $value['qty']) ?></td>
                                     <td>
-                                        <button onclick="window.location.href='remote.php?key=<?php echo $key ?>&action=0'" class="btn btn-xs btn-danger "><i
+                                        <button href="remote.php?key=<?php echo $key ?>&action=0" class="btn btn-xs btn-danger"><i
                                                     class="fa fa-remove"></i> Bỏ</button>
                                     </td>
                                 </tr>
@@ -131,10 +135,10 @@ if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
 <!--                                    <span id=""class="badge" >--><?php //echo $value['qty'] ?><!--</span>-->
 <!--                                    Số ngày-->
 <!--                                </li>-->
-<!--                                <li class="list-group-item">-->
-<!--                                    <span class="badge">--><?php //echo formatPrice($_SESSION['tongtien']) ?><!--</span>-->
-<!--                                    Số tiền-->
-<!--                                </li>-->
+                                <li class="list-group-item">
+                                    <span class="badge"><?php echo formatPrice($_SESSION['tongtien']) ?></span>
+                                    Số tiền
+                                </li>
 
                                 <li class="list-group-item">
                                     <span class="badge"><?php $_SESSION['total'] = $_SESSION['tongtien'];
@@ -148,8 +152,6 @@ if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
                                 </li>
                             </ul>
                         </div>
-
-
                     </section>
                 </div>
             </div>

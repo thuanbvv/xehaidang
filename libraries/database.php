@@ -13,7 +13,7 @@ class Database
 
     public function __construct()
     {
-        $this->link = mysqli_connect("localhost", "root", "root", "xehaidang") or die ();
+        $this->link = mysqli_connect("localhost", "root", "", "xehaidang") or die ();
         mysqli_set_charset($this->link, "utf8");
     }
 

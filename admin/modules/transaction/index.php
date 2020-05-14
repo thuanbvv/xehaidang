@@ -11,8 +11,7 @@ if (isset($_GET['page'])) {
 $sql = "SELECT transaction.* , users.name as nameuser, users.phone as phoneuser, users.adress as adressuser, product.name as nameproduct
      from transaction
      LEFT JOIN users ON users.id = transaction.users_id
-     LEFT JOIN product ON product.id = transaction.product_id
-     where transaction.status <> 4
+     LEFT JOIN product ON product.id = transaction.product_id 
       ORDER BY id DESC ";
 $transaction = $db->fetchJone("transaction", $sql, $p, 10, true);
 
@@ -82,29 +81,27 @@ if (isset($transaction['page'])) {
                             </td>
                             <td><?= $item['nameproduct'] ?></td>
                             <td>
-                                <?php if ($item['status'] == 2) : ?>
+                                <?php if ($item['status'] == 1) : ?>
                                     <span class="label label-info">Đã bàn giao xe</span>
-                                <?php elseif ($item['status'] == 3) : ?>
+                                <?php elseif ($item['status'] == 2) : ?>
                                     <span class="label label-success">Đã trả xe ( hoàn tất)</span>
-                                <?php elseif ($item['status'] == 0) : ?>
-                                    <span class="label label-warning">Chưa thanh toán</span>
+                                <?php elseif($item['status'] == 3) : ?>
+                                    <span class="label label-primary">Đã xác nhận đặt xe</span>
                                 <?php else : ?>
-                                    <span class="label label-default">Đã thanh toán, tiếp nhận</span>
+                                    <span class="label label-default">Tiếp nhận</span>
                                 <?php endif; ?>
                             </td>
 
                             <td>
-<!--                                <a style="margin-top: 5px;" class="btn btn-xs btn-info"-->
-<!--                                   href="edit.php?id=--><?php //echo $item['id'] ?><!--"><i class="fa fa-edit"></i>Sửa</a><br>-->
-                                <?php if ($item['status'] == 0) : ?>
+                                <a style="margin-top: 5px;" class="btn btn-xs btn-info"
+                                   href="edit.php?id=<?php echo $item['id'] ?>"><i class="fa fa-edit"></i>Sửa</a><br>
                                 <a style="margin-top: 5px;" class="btn btn-xs btn-danger"
-                                   href="status.php?id=<?php echo $item['id'] ?>&status=4"><i class="fa fa-times"></i>Xóa</a><br>
-                                <?php endif; ?>
+                                   href="delete.php?id=<?php echo $item['id'] ?>"><i class="fa fa-times"></i>Xóa</a><br>
                                 <a style="margin-top: 5px;" class="btn btn-xs btn-primary"
-                                   href="status.php?id=<?php echo $item['id'] ?>&status=2"><i class="fa fa-times"></i>Bàn
+                                   href="status.php?id=<?php echo $item['id'] ?>&status=1"><i class="fa fa-times"></i>Bàn
                                     giao xe</a><br>
                                 <a style="margin-top: 5px;" class="btn btn-xs btn-success"
-                                   href="status.php?id=<?php echo $item['id'] ?>&status=3"><i class="fa fa-times"></i>Trả
+                                   href="status.php?id=<?php echo $item['id'] ?>&status=2"><i class="fa fa-times"></i>Trả
                                     xe</a>
                             </td>
                         </tr>

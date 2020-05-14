@@ -6,6 +6,8 @@
 <script src="<?= base_url() ?>public/admin/js/bootstrap.min.js"></script>
 <script src="<?= base_url() ?>public/admin/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 
+<script src="<?= base_url() ?>public/admin/chart.js/Chart.js"></script>
+
 <!-- Page-Level Plugin Scripts - Dashboard -->
 <!--    <script src="--><? //= base_url() ?><!--public/admin/js/plugins/morris/raphael-2.1.0.min.js"></script>-->
 <!--    <script src="--><? //= base_url() ?><!--public/admin/js/plugins/morris/morris.js"></script>-->

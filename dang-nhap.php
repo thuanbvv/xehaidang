@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($is_check != NULL) {
             $_SESSION['name_user'] = $is_check['name'];
             $_SESSION['name_id'] = $is_check['id'];
+            $_SESSION['user'] = $is_check;
             $redirect_location = "index.php";
             echo " <script>alert(' Đăng nhập thành công ');location.href='$redirect_location' </script> ";
         } else {

@@ -73,7 +73,7 @@
                         <!-- /input-group -->
                     </li>
                     <li>
-                        <a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Trang Chủ</a>
+                        <a href="<?= base_url() ?>admin"><i class="fa fa-dashboard fa-fw"></i> Trang Chủ</a>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Danh sách <span class="fa arrow"></span></a>
@@ -111,17 +111,17 @@
                     </li>
 
 
-<!--                    <li>-->
-<!--                        <a href="#"><i class="fa fa-files-o fa-fw"></i> Trang liên quan<span-->
-<!--                                    class="fa arrow"></span></a>-->
-<!--                        <ul class="nav nav-second-level">-->
-<!---->
-<!--                            <li>-->
-<!--                                <a href="index.php">Thoát trang</a>-->
-<!--                            </li>-->
-<!--                        </ul>-->
+                    <li>
+                        <a href="#"><i class="fa fa-files-o fa-fw"></i> Trang liên quan<span
+                                    class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+
+                            <li>
+                                <a href="trang-chu.php">Thoát trang</a>
+                            </li>
+                        </ul>
                         <!-- /.nav-second-level -->
-<!--                    </li>-->
+                    </li>
                 </ul>
                 <!-- /#side-menu -->
             </div>

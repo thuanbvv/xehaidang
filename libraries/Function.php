@@ -100,7 +100,7 @@ function postInput($string)
 
 function base_url()
 {
-    return $url = "http://localhost/xehaidang/";
+    return $url = "http://localhost:8080/xehaidang/";
 }
 
 function public_admin()
@@ -215,17 +215,17 @@ function sale($number)
 }
 
 /**
+ * @param $_SESSION
  * @param $db
  * @param $product_id
- * @param $id_trans
  * @return int: -1:chua login/1:fail/0:success
  */
-function add_to_cart($db, $product_id, $id_trans){
+function add_to_cart($db, $product_id, $day, $id_transaction, $datetime1, $datetime2){
     if (!isset($_SESSION['name_id'])) {
 //        echo " <script>alert(' Bạn phải đăng nhập');location.href='index.php' </script> ";
         return -1;
     };
-
+    
     $status = 0;
     try{
         $product = $db->fetchID("product", $product_id);
@@ -233,12 +233,13 @@ function add_to_cart($db, $product_id, $id_trans){
         if (!isset($_SESSION['cart'][$product_id])) {
             $_SESSION['cart'][$product_id]['name'] = $product['name'];
             $_SESSION['cart'][$product_id]['thunbar'] = $product['thunbar'];
-            $_SESSION['cart'][$product_id]['qty'] = 1;
+            $_SESSION['cart'][$product_id]['qty'] = $day != 0 ? $day : 1;
             $_SESSION['cart'][$product_id]['price'] = ((100 - $product['sale']) * $product['price']) / 100;
-            $_SESSION['cart'][$product_id]['id_trans'] = array($id_trans);
+            $_SESSION['cart'][$product_id]['id_transaction'] = $id_transaction;
+            $_SESSION['cart'][$product_id]['datetime1'] = date("d-m-Y", strtotime($datetime1));
+            $_SESSION['cart'][$product_id]['datetime2'] = date("d-m-Y", strtotime($datetime2));
         } else {
             $_SESSION['cart'][$product_id]['qty'] += 1;
-            $_SESSION['cart'][$product_id]['id_trans'] += $id_trans;
         }
     }catch (Exception $e){
         $status = 1;
@@ -247,6 +248,19 @@ function add_to_cart($db, $product_id, $id_trans){
     return $status;
 }
 
+function getNumberDay($dateStart, $dateEnd)
+{
+    $start = new DateTime($dateStart);
+    $end = new DateTime($dateEnd);
+    $interval = $end->diff($start);
+    return $interval->d;
+}
+
+function getDay($expiryDate)
+{
+    $dateNow = date('Y-m-d H:i:s'); //current date
+    return (strtotime($expiryDate) - strtotime($dateNow)) / (60 * 60 * 24);
+}
 
 ?>
 

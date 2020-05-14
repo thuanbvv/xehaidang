@@ -10,7 +10,7 @@ if (isset($_GET['page'])) {
 }
 
 $sql = "SELECT users.* from users ORDER BY id DESC ";
-$admin = $db->fetchJone("users", $sql, $p, 2, true);
+$admin = $db->fetchJone("users", $sql, $p, 15, true);
 if (isset($admin['page'])) {
     $sotrang = $admin['page'];
     unset($admin['page']);

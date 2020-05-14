@@ -9,7 +9,7 @@ $id = intval(getInput('id'));
 
 
 $product = $db->fetchID("product", $id);
-
+die('1');
 
 if (!isset($_SESSION['cart'][$id])) {
     $_SESSION['cart'][$id]['name'] = $product['name'];
@@ -19,6 +19,7 @@ if (!isset($_SESSION['cart'][$id])) {
 } else {
     $_SESSION['cart'][$id]['qty'] += 1;
 }
+die('1');
 echo " <script>alert(' Thêm sản phẩm thành công');location.href='gio-hang.php' </script> ";
 ?>
 
