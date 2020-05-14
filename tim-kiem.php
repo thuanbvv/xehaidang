@@ -10,13 +10,13 @@ if (isset($_GET['k'])) {
 if (isset($_GET['price'])) {
     $price = $_GET['price'];
     if ($price == 1) {
-        $sql .= " AND price <  100000000 ";
+        $sql .= " AND price <  500000 ";
     } elseif ($price == 2) {
-        $sql .= ' AND price BETWEEN  100000000 AND 300000000';
+        $sql .= ' AND price BETWEEN  500000 AND 700000';
     } elseif ($price == 3) {
-        $sql .= ' AND price BETWEEN  300000000 AND 500000000';
+        $sql .= ' AND price BETWEEN  700000 AND 900000';
     } else {
-        $sql .= " AND price >  500000000 ";
+        $sql .= " AND price >  900000 ";
     }
 }
 
@@ -48,22 +48,22 @@ $kqtk = $db->fetchsql($sql, $debug = false);
                                                     <li>
                                                         <a style="padding: 5px;display: inline-block;"
                                                            href="<?= \autoload\Url::addParams(['price' => 1]) ?>">Dưới
-                                                            100 tr</a>
+                                                            500 nghìn</a>
                                                     </li>
                                                     <li>
                                                         <a style="padding: 5px;display: inline-block;"
-                                                           href="<?= \autoload\Url::addParams(['price' => 2]) ?>">100 tr
-                                                            - 300 tr</a>
+                                                           href="<?= \autoload\Url::addParams(['price' => 2]) ?>">500 nghìn
+                                                            - 700 nghìn</a>
                                                     </li>
                                                     <li>
                                                         <a style="padding: 5px;display: inline-block;"
-                                                           href="<?= \autoload\Url::addParams(['price' => 3]) ?>">300 tr
-                                                            - 500 tr</a>
+                                                           href="<?= \autoload\Url::addParams(['price' => 3]) ?>">700 nghìn
+                                                            - 900 nghìn</a>
                                                     </li>
                                                     <li>
                                                         <a style="padding: 5px;display: inline-block;"
                                                            href="<?= \autoload\Url::addParams(['price' => 4]) ?>">Trên
-                                                            500tr</a>
+                                                            900 nghìn</a>
                                                     </li>
                                                 </ul>
                                             </div>

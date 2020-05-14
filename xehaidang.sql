@@ -18,6 +18,8 @@ SET time_zone = "+00:00";
 
 --
 -- Database: `xehaidang`
+CREATE DATABASE IF NOT EXISTS xehaidang;
+USE xehaidang;
 --
 
 -- --------------------------------------------------------

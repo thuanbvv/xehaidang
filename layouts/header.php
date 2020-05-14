@@ -159,7 +159,7 @@
                             <!-- Search -->
                             <div class="search_box">
                                 <div class="search_wrapper">
-                                    <form action="/tim-kiem.php">
+                                    <form action="tim-kiem.php">
                                         <input type="text" name="k" value="<?= getInput('k') ?>"
                                                class="index_input_search"/>
                                         <button class="btn_search_submit btn" type="submit"><span>  Tìm ngay</span>
