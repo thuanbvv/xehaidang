@@ -85,7 +85,7 @@ $kqtk = $db->fetchsql($sql, $debug = false);
                                                                 <a href="chi-tiet-san-pham.php?id= <?php echo $product['id'] ?>"> <?php echo $product['name']; ?></a>
                                                             </h4>
                                                         </div>
-                                                        <a class="readmore" href="chi-tiet-san-pham.php">Xem chi tiết<i
+                                                        <a class="readmore" href="chi-tiet-san-pham.php?id= <?php echo $product['id'] ?>">Xem chi tiết<i
                                                                     class="fa fa-angle-double-right"
                                                                     aria-hidden="true"></i></a>
                                                     </div>
