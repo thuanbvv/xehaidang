@@ -150,6 +150,80 @@
                 </section>
                 <!--EndBlog-->
             </div>
+            <div class="col-md-12">
+                <!--Blog-->
+                <section id="blog_index" class="container m-b-20">
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12">
+                            <div class="section-heading">
+                                <h2 title="Tin tức nổi bật">
+                                    <span>Thuê xe có tài</span>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="" class="">
+                            <?php foreach ($listproduct_cotai as $item) : ?>
+                                <div style="border-bottom: 0px;" class="col-md-3 article_item">
+                                    <div class="article_img">
+                                        <img src="public/uploads/product/<?php echo $item['thunbar'] ?>" alt=""
+                                             title="" style="height: 165px;">
+                                    </div>
+                                    <div class="article_content clearfix">
+                                        <div class="title">
+                                            <h4><a href="chi-tiet-san-pham.php?id=<?php echo $item['id'] ?>"
+                                                   title="<?php echo $item['name'] ?>"><?php echo $item['name'] ?></a>
+                                            </h4>
+                                        </div>
+                                        <div class="article_meta">
+                                            <div style="color: #ffcc00;" class="article_comment">
+                                                <i class="fa fa-comments-o" aria-hidden="true"></i>
+                                                *****
+                                            </div>
+                                            <div class="article_created">
+                                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                <time datetime="<?php echo $item['updated_at'] ?>"><?php echo $item['updated_at'] ?></time>
+                                            </div>
+                                        </div>
+                                        <div class="des">
+                                            <div style="display: flex;justify-content: space-between;border-top: 1px solid #dedede;padding-top: 10px;margin-top: 10px">
+                                                <div style="width: 50%">
+                                                    <img style="width: 20px;margin-right: 10px;"
+                                                         src="public/frontend/Images/ic-fuel.png"/>
+                                                    <span>Xăng</span>
+                                                </div>
+                                                <div style="width: 50%;text-align: right">
+                                                    <img style="width: 20px;" src="public/frontend/Images/ic-tms.png">
+                                                    <span style="width: 50px;display: inline-block">Số sàn</span>
+                                                </div>
+                                            </div>
+
+                                            <div style="display: flex;justify-content: space-between;padding: 10px 0">
+                                                <div style="width: 50%">
+                                                    <img style="width: 20px;margin-right: 10px;"
+                                                         src="public/frontend/Images/piston.png">
+                                                    <span>2L</span>
+                                                </div>
+                                                <div style="width: 50%;text-align: right">
+                                                    <img style="width: 20px" src="public/frontend/Images/ic-seat.png">
+                                                    <span style="width: 50px;display: inline-block">7 Chổ</span>
+                                                </div>
+                                            </div>
+                                            <!--                                            <p>GHI CHÚ</p>-->
+                                            <!--                                            <p>-->
+                                            <? //= $item['note'] ?><!--</p>-->
+                                        </div>
+                                        <a class="readmore" href="chi-tiet-san-pham.php?id=<?php echo $item['id'] ?>">Xem
+                                            chi tiết<i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </section>
+                <!--EndBlog-->
+            </div>
 
         </div>
     </div>

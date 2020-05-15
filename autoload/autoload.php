@@ -26,6 +26,11 @@ $listproduct7 = $db->fetchsql($sqlsp7);
 $sqlsp4 = "SELECT product.*,category_chil.fixcate from product LEFT JOIN category_chil on category_chil.id=product.category_id_chil WHERE category_chil.fixcate = 0 ORDER BY product.id DESC LIMIT 4";
 $listproduct4 = $db->fetchsql($sqlsp4);
 
+// lấy danh sách sản phẩm xe có tài
+$sqlsp_cotai = "SELECT product.*,category_chil.fixcate from product LEFT JOIN category_chil on category_chil.id=product.category_id_chil WHERE category_chil.category_id = 3 ORDER BY product.id DESC LIMIT 4";
+$listproduct_cotai = $db->fetchsql($sqlsp_cotai);
+
+
 
 //xử lý category con
 $categorychill = $db->fetchAll('category_chil');
