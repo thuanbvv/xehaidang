@@ -10,8 +10,10 @@ if (empty($editCategory)) {
 }
 
 /*kiểm tra danh mục có sản phẩm chưa*/
-$kt_product = $db->fetchOne("product", " category_id = $id ");
-if ($kt_product == NULL) {
+$kt_product = "SELECT * FROM product join LEFT JOIN category_chil on category_chil.id=product.category_id_chil where category_id = $id ORDER BY updated_at";
+$kt_product = $db->fetchsql($sqlmennu);
+
+if ($kt_product == NULL || $kt_product->size < 1) {
     $num = $db->delete('category', $id);
     if ($num > 0) {
         $_SESSION['success'] = "Xóa thành công";
@@ -21,6 +23,7 @@ if ($kt_product == NULL) {
         redirectAdmin("category");
     }
 } else {
+    var_dump($kt_product);
     $_SESSION['error'] = "Danh mục đang có sản phẩm!  Bạn không thể xóa";
     redirectAdmin("category");
 }
