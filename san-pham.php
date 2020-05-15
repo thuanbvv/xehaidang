@@ -19,6 +19,11 @@ if ($cate) {
     if (!$categoryCurrent) {
         $categoryCurrent = $db->fetchID('category_chil', $cate);
     }
+}else{
+    if (isset($_GET['danh-muc-tong'])) {
+        $cate_tong = $_GET['danh-muc-tong'];
+        $sql = " SELECT * FROM product p LEFT JOIN category_chil c on c.id = p.category_id_chil where category_id = " . $cate_tong ;
+    }
 }
 
 //    dd($categoryCurrent);

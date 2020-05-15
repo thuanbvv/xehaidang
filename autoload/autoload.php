@@ -19,11 +19,11 @@ $productNewKM = $db->fetchsql($sqlnewKM);
 // danh sách menu
 $MENULIST = $db->fetchAll('menu');
 // lấy danh sách sản phẩm xe 7 chổ
-$sqlsp7 = "SELECT product.*,category_chil.fixcate from product LEFT JOIN category_chil on category_chil.id=product.category_id_chil WHERE category_chil.fixcate = 1 ORDER BY product.id DESC LIMIT 4";
+$sqlsp7 = "SELECT product.*,category_chil.fixcate from product LEFT JOIN category_chil on category_chil.id=product.category_id_chil WHERE category_chil.fixcate = 1 and category_chil.category_id != 3 ORDER BY product.id DESC LIMIT 4";
 $listproduct7 = $db->fetchsql($sqlsp7);
 
 // lấy danh sách sản phẩm xe 4 chổ
-$sqlsp4 = "SELECT product.*,category_chil.fixcate from product LEFT JOIN category_chil on category_chil.id=product.category_id_chil WHERE category_chil.fixcate = 0 ORDER BY product.id DESC LIMIT 4";
+$sqlsp4 = "SELECT product.*,category_chil.fixcate from product LEFT JOIN category_chil on category_chil.id=product.category_id_chil WHERE category_chil.fixcate = 0 and category_chil.category_id != 3 ORDER BY product.id DESC LIMIT 4";
 $listproduct4 = $db->fetchsql($sqlsp4);
 
 // lấy danh sách sản phẩm xe có tài

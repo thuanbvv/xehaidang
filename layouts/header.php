@@ -323,7 +323,7 @@
                                     <ul class="nav_verticalmenu" style="display: none;">
                                         <?php foreach ($category as $value) : ?>
                                             <li class="has-child level0">
-                                                <a class="" href="san-pham.php?danh-muc=<?= $value['id'] ?>"><img
+                                                <a class="" href="san-pham.php?danh-muc-tong=<?= $value['id'] ?>"><img
                                                             class="icon-menu" src="public/frontend/Uploads/logo.png"
                                                             alt="">
                                                     <span><?php echo $value['name'] ?></span>
