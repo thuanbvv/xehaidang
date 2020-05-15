@@ -11,23 +11,23 @@ define('ROOT', $_SERVER['DOCUMENT_ROOT'] . "/xehaidang/public/uploads/");
 $category = $db->fetchAll('category');
 
 /*LẤY DS SẢN PHẨM MỚI NHẤT*/
-$sqlnew = "SELECT * FROM product WHERE 1 ORDER BY id DESC LIMIT 4";
+$sqlnew = "SELECT * FROM product WHERE 1 ORDER BY id DESC ";
 $productNew = $db->fetchsql($sqlnew);
 /*LẤY DS SẢN PHẨM KHUYẾN MÃI*/
-$sqlnewKM = "SELECT * FROM product WHERE sale>0 ORDER BY id DESC LIMIT 3";
+$sqlnewKM = "SELECT * FROM product WHERE sale>0 ORDER BY id DESC";
 $productNewKM = $db->fetchsql($sqlnewKM);
 // danh sách menu
 $MENULIST = $db->fetchAll('menu');
 // lấy danh sách sản phẩm xe 7 chổ
-$sqlsp7 = "SELECT product.*,category_chil.fixcate from product LEFT JOIN category_chil on category_chil.id=product.category_id_chil WHERE category_chil.fixcate = 1 and category_chil.category_id != 3 ORDER BY product.id DESC LIMIT 4";
+$sqlsp7 = "SELECT product.*,category_chil.fixcate from product LEFT JOIN category_chil on category_chil.id=product.category_id_chil WHERE category_chil.fixcate = 1 and category_chil.category_id != 3 ORDER BY product.id DESC";
 $listproduct7 = $db->fetchsql($sqlsp7);
 
 // lấy danh sách sản phẩm xe 4 chổ
-$sqlsp4 = "SELECT product.*,category_chil.fixcate from product LEFT JOIN category_chil on category_chil.id=product.category_id_chil WHERE category_chil.fixcate = 0 and category_chil.category_id != 3 ORDER BY product.id DESC LIMIT 4";
+$sqlsp4 = "SELECT product.*,category_chil.fixcate from product LEFT JOIN category_chil on category_chil.id=product.category_id_chil WHERE category_chil.fixcate = 0 and category_chil.category_id != 3 ORDER BY product.id DESC";
 $listproduct4 = $db->fetchsql($sqlsp4);
 
 // lấy danh sách sản phẩm xe có tài
-$sqlsp_cotai = "SELECT product.*,category_chil.fixcate from product LEFT JOIN category_chil on category_chil.id=product.category_id_chil WHERE category_chil.category_id = 3 ORDER BY product.id DESC LIMIT 4";
+$sqlsp_cotai = "SELECT product.*,category_chil.fixcate from product LEFT JOIN category_chil on category_chil.id=product.category_id_chil WHERE category_chil.category_id = 3 ORDER BY product.id DESC";
 $listproduct_cotai = $db->fetchsql($sqlsp_cotai);
 
 
