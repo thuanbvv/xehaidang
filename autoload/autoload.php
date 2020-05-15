@@ -30,7 +30,9 @@ $listproduct4 = $db->fetchsql($sqlsp4);
 $sqlsp_cotai = "SELECT product.*,category_chil.fixcate from product LEFT JOIN category_chil on category_chil.id=product.category_id_chil WHERE category_chil.category_id = 3 ORDER BY product.id DESC";
 $listproduct_cotai = $db->fetchsql($sqlsp_cotai);
 
-
+//list tin tức
+$sql_tintuc = "SELECT * FROM `posts` order by created_at desc";
+$list_tintuc = $db->fetchsql($sql_tintuc);
 
 //xử lý category con
 $categorychill = $db->fetchAll('category_chil');
