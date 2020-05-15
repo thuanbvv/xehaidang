@@ -133,7 +133,7 @@
                                                 </div>
                                                 <div style="width: 50%;text-align: right">
                                                     <img style="width: 20px" src="public/frontend/Images/ic-seat.png">
-                                                    <span style="width: 50px;display: inline-block">7 Chổ</span>
+                                                    <span style="width: 50px;display: inline-block">4 Chổ</span>
                                                 </div>
                                             </div>
                                             <!--                                            <p>GHI CHÚ</p>-->
@@ -207,7 +207,7 @@
                                                 </div>
                                                 <div style="width: 50%;text-align: right">
                                                     <img style="width: 20px" src="public/frontend/Images/ic-seat.png">
-                                                    <span style="width: 50px;display: inline-block">7 Chổ</span>
+                                                    <span style="width: 50px;display: inline-block"><?php  if ($item['fixcate']): echo "7 Chỗ"; else: echo "4 Chỗ"; endif ?></span>
                                                 </div>
                                             </div>
                                             <!--                                            <p>GHI CHÚ</p>-->
