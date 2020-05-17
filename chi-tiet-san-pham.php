@@ -2,6 +2,7 @@
 require_once __DIR__ . "/autoload/autoload.php";
 require_once __DIR__ . "/libraries/function.php";
 require_once __DIR__ . "/layouts/header.php";
+require_once __DIR__ . "/libraries/Function.php";
 $id = intval(getInput('id'));
 $dsproductId = $db->fetchID('product', $id);
 $idcate = intval($dsproductId['category_id_chil']);
@@ -270,6 +271,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <?php if (isset($errors['time_start'])) : ?>
                                     <span style="color: red"><?= $errors['time_start'] ?></span>
                                 <?php endif; ?>
+                                    <span id="error_start_time" hidden="true" style="color: red"></span>
                             </div>
                             <div class="form-group position-relative form-group">
                                 <label class=" pt-2">Thời gian trả xe</label>
@@ -278,6 +280,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <?php if (isset($errors['time_stop'])) : ?>
                                     <span style="color: red"><?= $errors['time_stop'] ?></span>
                                 <?php endif; ?>
+                                    <span id="error_stop_time" hidden="true" style="color: red"></span>
                             </div>
                             <input type="hidden" name="id" value="<?= $dsproductId['id'] ?>">
                             <input type="hidden" name="price" value="<?= $dsproductId['price'] ?>">
@@ -571,7 +574,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         let $datetime1 = new Date($("#time_start_input").val());
         let $datetime2 = new Date($("#time_stop_input").val());
         let $interval = ($datetime2.getTime() - $datetime1.getTime()) / (1000 * 3600 * 24) + 1;
-        console.log($interval);
+        // console.log($interval);
+
+        //check time in realtime
+        let $datenow = new Date();
+        $datenow.setHours(0);
+        let $interval_start = $datetime1.getTime() - $datenow.getTime();
+        let $interval_stop = $datetime2.getTime() - $datenow.getTime();
+
+        console.log($interval_start);
+        console.log($interval_stop);
+
+//        var_dump($datenow1);
+        if ($interval_start < 0) {
+            $("#error_start_time").show();
+            document.getElementById("error_start_time").textContent = "Ngày trả xe không hợp lệ";
+
+        }
+
+        if ($interval_stop < 0) {
+            $("#error_stop_time").show();
+            document.getElementById("error_stop_time").textContent = "Ngày trả xe không hợp lệ";
+        }
+
         // if ($interval < 1){
         //     reset_time();
         //     $interval = 1;
