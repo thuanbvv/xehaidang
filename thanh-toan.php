@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/autoload/autoload.php";
+require_once __DIR__ . "/layouts/header.php";
 
 $user = $_SESSION['user'];
 $data =
@@ -38,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 ?>
-<?php require_once __DIR__ . "/layouts/header.php"; ?>
+
 <div class="main">
     <div class="container">
         <!--NỘI DUNG TRANG ĐĂNG KÝ , PHẦN NÀY SẼ THAY ĐỔI THEO TRANG -->
