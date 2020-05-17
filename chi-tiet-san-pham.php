@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $interval = $datetime1->diff($datetime2);
 
 
-        var_dump($datenow1);
+//        var_dump($datenow1);
         if ($datenow1 < 0) {
             $errors['time_start'] = "Ngày nhận xe không hợp lệ";
         }
