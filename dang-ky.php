@@ -38,8 +38,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($error)) {
         $id_insert = $db->insert("users", $data);
         if ($id_insert > 0) {
-            $_SESSION['success'] = "Đăng ký thành công ! Mời sang trang đăng nhập để nhập ";
-            header("location: dang-nhap.php");
+            echo"<script>Swal.fire({type: 'success', title: 'Success', text: 'Đăng ký thành công, đang chuyển sang trang đăng nhập!', timer: 1400,showLoaderOnConfirm: true,closeOnConfirm: false}).then(function() {
+                window.location.href='dang-nhap.php';                              
+            });</script> ";
         } else {
 
         }
