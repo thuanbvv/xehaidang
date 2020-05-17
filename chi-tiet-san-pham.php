@@ -75,8 +75,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         if ($interval->d < 0) {
-            $errors['time_stop'] = "Ngày trả xe phải sau ngày mượn xe";
+            $errors['time_stop'] = "Ngày trả xe phải sau ngày mượn xe!";
         }
+
         if (empty($errors)) {
 
             $data =
@@ -268,18 +269,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <label class=" pt-2">Thời gian nhận xe</label>
                                 <input id="time_start_input" class="form-control" name="time_start" type="date"
                                        onchange="update_day_count()" data-date-format="yyyy/dd/mm">
-                                <?php if (isset($errors['time_start'])) : ?>
-                                    <span style="color: red"><?= $errors['time_start'] ?></span>
-                                <?php endif; ?>
+<!--                                --><?php //if (isset($errors['time_start'])) : ?>
+<!--                                    <span style="color: red">--><?//= $errors['time_start'] ?><!--</span>-->
+<!--                                --><?php //endif; ?>
                                     <span id="error_start_time" hidden="true" style="color: red"></span>
                             </div>
                             <div class="form-group position-relative form-group">
                                 <label class=" pt-2">Thời gian trả xe</label>
                                 <input id="time_stop_input" class="form-control" name="time_stop" type="date"
                                        onchange="update_day_count()" data-date-format="yyyy/dd/mm">
-                                <?php if (isset($errors['time_stop'])) : ?>
-                                    <span style="color: red"><?= $errors['time_stop'] ?></span>
-                                <?php endif; ?>
+<!--                                --><?php //if (isset($errors['time_stop'])) : ?>
+<!--                                    <span style="color: red">--><?//= $errors['time_stop'] ?><!--</span>-->
+<!--                                --><?php //endif; ?>
                                     <span id="error_stop_time" hidden="true" style="color: red"></span>
                             </div>
                             <input type="hidden" name="id" value="<?= $dsproductId['id'] ?>">
@@ -589,12 +590,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($interval_start < 0) {
             $("#error_start_time").show();
             document.getElementById("error_start_time").textContent = "Ngày trả xe không hợp lệ";
-
+        }else{
+            $("#error_stop_time").hide();
         }
 
         if ($interval_stop < 0) {
             $("#error_stop_time").show();
             document.getElementById("error_stop_time").textContent = "Ngày trả xe không hợp lệ";
+        }else {
+            $("#error_stop_time").hide();
         }
 
         // if ($interval < 1){
