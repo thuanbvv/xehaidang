@@ -93,10 +93,10 @@ if (isset($transaction['page'])) {
                             </td>
 
                             <td>
-                                <a style="margin-top: 5px;" class="btn btn-xs btn-info"
-                                   href="edit.php?id=<?php echo $item['id'] ?>"><i class="fa fa-edit"></i>Sửa</a><br>
-                                <a style="margin-top: 5px;" class="btn btn-xs btn-danger"
-                                   href="delete.php?id=<?php echo $item['id'] ?>"><i class="fa fa-times"></i>Xóa</a><br>
+<!--                                <a style="margin-top: 5px;" class="btn btn-xs btn-info"-->
+<!--                                   href="edit.php?id=--><?php //echo $item['id'] ?><!--"><i class="fa fa-edit"></i>Sửa</a><br>-->
+<!--                                <a style="margin-top: 5px;" class="btn btn-xs btn-danger"-->
+<!--                                   href="delete.php?id=--><?php //echo $item['id'] ?><!--"><i class="fa fa-times"></i>Xóa</a><br>-->
                                 <a style="margin-top: 5px;" class="btn btn-xs btn-primary"
                                    href="status.php?id=<?php echo $item['id'] ?>&status=1"><i class="fa fa-times"></i>Bàn
                                     giao xe</a><br>
