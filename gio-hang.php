@@ -1,14 +1,17 @@
 <?php
 require_once __DIR__ . "/autoload/autoload.php";
 require_once __DIR__ . "/libraries/function.php";
+require_once __DIR__ . "/layouts/header.php";
 
 $sum = 0;
 if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
-    echo " <script>alert('Giỏ hàng rỗng');location.href='index.php' </script> ";
+    echo " <script> Swal.fire({type: 'info', title: 'Thông báo', text: 'Giỏ hàng rỗng, đang chuyển đến trang chủ!', timer: 1300,showLoaderOnConfirm: true,closeOnConfirm: false}).then(function() {
+                window.location.href='index.php';                              
+            }); </script> ";
 }
 //dd($_SESSION['cart']); die;
 ?>
-<?php require_once __DIR__ . "/layouts/header.php"; ?>
+
 <div class="main">
     <div class="container">
         <!--NỘI DUNG TRANG ĐĂNG KÝ , PHẦN NÀY SẼ THAY ĐỔI THEO TRANG -->

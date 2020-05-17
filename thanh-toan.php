@@ -11,7 +11,9 @@ $data =
     ];
 
 if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
-    echo " <script>alert('Giỏ hàng rỗng');location.href='index.php' </script> ";
+    echo " <script> Swal.fire({type: 'info', title: 'Thông báo', text: 'Giỏ hàng rỗng, đang chuyển đến trang chủ!', timer: 1300,showLoaderOnConfirm: true,closeOnConfirm: false}).then(function() {
+                window.location.href='index.php';                              
+            }); </script>  ";
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

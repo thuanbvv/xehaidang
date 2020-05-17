@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . "/autoload/autoload.php";
 require_once __DIR__ . "/libraries/function.php";
+require_once __DIR__ . "/layouts/header.php";
 $id = intval(getInput('id'));
 $dsproductId = $db->fetchID('product', $id);
 $idcate = intval($dsproductId['category_id_chil']);
@@ -24,7 +25,9 @@ $data = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!isset($_SESSION['name_id'])) {
-        echo " <script>alert(' Đăng nhập để đặt xe');location.href='dang-nhap.php' </script> ";
+        echo " <script> Swal.fire({type: 'error', title: 'Error', text: 'Bạn cần đăng nhập trước để thực hiện hành động này!', timer: 1300,showLoaderOnConfirm: true,closeOnConfirm: false}).then(function() {
+                window.location.href='dang-nhap.php';                              
+            }); </script>  ";
     }
 
     $pick_begin = postInput("time_start");
@@ -32,20 +35,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check xe đã đặt hay chưa
     $transaction = $db->fetchsql('select * from transaction where product_id =  ' . $id . ' and status != 2 and ((time_start <= \''
-        .$pick_begin. '\' and time_stop >= \'' .$pick_end. '\') or ( time_start >= \'' . $pick_begin . '\' and time_start <= \'' . $pick_end
-        . '\') or (time_stop >= \'' . $pick_begin . '\' and time_stop <= \'' .$pick_end. '\')) ');
+        . $pick_begin . '\' and time_stop >= \'' . $pick_end . '\') or ( time_start >= \'' . $pick_begin . '\' and time_start <= \'' . $pick_end
+        . '\') or (time_stop >= \'' . $pick_begin . '\' and time_stop <= \'' . $pick_end . '\')) ');
 
     $product_quantity = $db->fetchsql("select number from product where id = " . $id);
-    var_dump($transaction);
-    var_dump($product_quantity[0]["number"]);
+//    var_dump($transaction);
+//    var_dump($product_quantity[0]["number"]);
 
     if ($transaction && (sizeof($transaction) >= (int)$product_quantity[0]["number"])) {
 //        $to_time = $transaction['time_stop'];
 //        $from_time = $transaction['time_start'];
-        echo " <script>alert(' Xe đã đặt hết. Xin vui lòng đặt xe khác hoặc chọn lại thời gian'); window.location.href = 'index.php' </script> ";
-    }else{
-
-
+        echo " <script>Swal.fire({type: 'error', title: 'Error', text: 'Xe đã đặt hết. Xin vui lòng đặt xe khác hoặc chọn lại thời gian!', timer: 1300,showLoaderOnConfirm: true,closeOnConfirm: false}).then(function() {
+                window.location.href='index.php';                              
+            });</script> ";
+    } else {
         $errors = [];
         if (postInput('time_start') == '') {
             $errors['time_start'] = "Mời bạn nhập đầy đủ ngày nhận xe";
@@ -54,47 +57,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $errors['time_stop'] = "Mời bạn nhập đầy đủ ngày trả xe";
         }
 
-        $datetime1 = new DateTime(date('Y-m-d',strtotime(postInput('time_start'))));
-        $datetime2 = new DateTime(date('Y-m-d',strtotime(postInput('time_stop'))));
+        $datetime1 = new DateTime(date('Y-m-d', strtotime(postInput('time_start'))));
+        $datetime2 = new DateTime(date('Y-m-d', strtotime(postInput('time_stop'))));
         $datenow1 = getDay(postInput('time_start'));
         $datenow2 = getDay(postInput('time_stop'));
         $interval = $datetime1->diff($datetime2);
 
 
         var_dump($datenow1);
-        if ($datenow1 < 0){
+        if ($datenow1 < 0) {
             $errors['time_start'] = "Ngày nhận xe không hợp lệ";
         }
 
-        if ($datenow2 < 0){
+        if ($datenow2 < 0) {
             $errors['time_stop'] = "Ngày trả xe không hợp lệ";
         }
 
-        if ($interval->d < 0){
+        if ($interval->d < 0) {
             $errors['time_stop'] = "Ngày trả xe phải sau ngày mượn xe";
         }
         if (empty($errors)) {
 
             $data =
-            [
-                "time_start" => postInput('time_start'),
-                "time_stop" => postInput('time_stop'),
-                "product_id" => postInput('id'),
-                "type" => postInput('type'),
-                "amount" => intval(postInput('price'))  * intval($interval->d),
-            ];
+                [
+                    "time_start" => postInput('time_start'),
+                    "time_stop" => postInput('time_stop'),
+                    "product_id" => postInput('id'),
+                    "type" => postInput('type'),
+                    "amount" => intval(postInput('price')) * intval($interval->d),
+                ];
             $data['users_id'] = $_SESSION['name_id'];
             $data['number_day'] = $interval->d;
             $id_insert = $db->insert("transaction", $data);
 //            $id_insert = 1;
             if ($id_insert > 0) {
                 $push_cart_status = add_to_cart($db, $id, $interval->d, $id_insert, postInput('time_start'), postInput('time_stop'));
-                if ($push_cart_status == 0){
-                    echo " <script>alert(' Đặt xe thành công');location.href='gio-hang.php' </script> ";
-                }else if ($push_cart_status == 1){
-                    echo " <script>alert(' Có lỗi khi đặt xe');location.href='index.php' </script> ";
-                }else{
-                    echo " <script>alert(' Bạn cần login trước để thực hiện hành động này');location.href='dang-nhap.php' </script> ";
+                if ($push_cart_status == 0) {
+                    echo " <script>Swal.fire({type: 'success', title: 'Success', text: 'Đặt xe thành công, đang chuyển đến giỏ hàng!', timer: 1300,showLoaderOnConfirm: true,closeOnConfirm: false}).then(function() {
+                window.location.href='gio-hang.php';                              
+            });</script> ";
+                } else if ($push_cart_status == 1) {
+                    echo " <script>Swal.fire({type: 'error', title: 'Error', text: 'Có lỗi khi đặt xe!', timer: 1300,showLoaderOnConfirm: true,closeOnConfirm: false}).then(function() {
+                window.location.href='index.php';                              
+            }); </script> ";
+                } else {
+                    echo "<script> Swal.fire({type: 'error', title: 'Error', text: 'Bạn cần đăng nhập trước để thực hiện hành động này!', timer: 1300,showLoaderOnConfirm: true,closeOnConfirm: false}).then(function() {
+                window.location.href='dang-nhap.php';                              
+            }); </script> ";
                 }
             }
         }
@@ -102,7 +111,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<?php require_once __DIR__ . "/layouts/header.php"; ?>
 <style>
     .vhc_icon {
         width: 20px;
@@ -257,7 +265,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                             <div class="form-group position-relative form-group">
                                 <label class=" pt-2">Thời gian nhận xe</label>
-                                <input id = "time_start_input" class="form-control" name="time_start" type="date"
+                                <input id="time_start_input" class="form-control" name="time_start" type="date"
                                        onchange="update_day_count()" data-date-format="yyyy/dd/mm">
                                 <?php if (isset($errors['time_start'])) : ?>
                                     <span style="color: red"><?= $errors['time_start'] ?></span>
@@ -265,7 +273,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                             <div class="form-group position-relative form-group">
                                 <label class=" pt-2">Thời gian trả xe</label>
-                                <input id = "time_stop_input" class="form-control" name="time_stop" type="date"
+                                <input id="time_stop_input" class="form-control" name="time_stop" type="date"
                                        onchange="update_day_count()" data-date-format="yyyy/dd/mm">
                                 <?php if (isset($errors['time_stop'])) : ?>
                                     <span style="color: red"><?= $errors['time_stop'] ?></span>
@@ -287,16 +295,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="form-group mb-none position-relative form-group">
                                 <label class="pt-2">CHI TIẾT GIÁ</label>
                                 <p style="color: red; font-weight: bold;" class="form-control-static p-none">Đơn giá
-                                    ngày <span><span id = "price"><?php echo formatPrice($dsproductId['price']) ?></span> vnđ</span></p>
+                                    ngày <span><span id="price"><?php echo formatPrice($dsproductId['price']) ?></span> vnđ</span>
+                                </p>
                                 <p style="color: red; font-weight: bold;" class="form-control-static p-none">Sales
-                                    ngày <span><span id = "sale"><?php echo formatPrice($dsproductId['sale']) ?></span> %</span></p>
-                                <p class="form-control-static pt-none">Ngày: <span id = "day_count_span">1 ngày</span></p>
+                                    ngày <span><span id="sale"><?php echo formatPrice($dsproductId['sale']) ?></span> %</span>
+                                </p>
+                                <p class="form-control-static pt-none">Ngày: <span id="day_count_span">1 ngày</span></p>
                             </div>
 
                             <div class="sum ">
                                 <p class="pull-left text-left">TỔNG</p>
                                 <p style="color:red; font-weight: bold;" class="pull-right text-right">
-                                    <span id = "total_amount">1 vnđ</span>
+                                    <span id="total_amount">1 vnđ</span>
                                 </p>
                             </div>
                             <div class="form-group mb-none position-relative form-group">
@@ -314,11 +324,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <span class="form-control-static pt-none">- Nếu khách muốn thanh toán ngay vui lòng đặt xe, sẽ có nhận viên liên hệ tư vấn thêm phụ trội</span>
                             </div>
 
-<!--                            <div class="btn btn-block mt-md"-->
-<!--                                 style="background: linear-gradient(to right, rgb(15, 149, 155), rgb(6, 74, 80)); color: rgb(255, 255, 255); padding: 14px 1.2rem; border: none; min-width: 150px; font-weight: 500;">-->
-<!--                                <p><a href="addcart.php?id=--><?php //echo $dsproductId['id'] ?><!--"><i-->
-<!--                                                class="fa fa-shopping-basket"> </i></a></p>-->
-<!--                            </div>-->
+                            <!--                            <div class="btn btn-block mt-md"-->
+                            <!--                                 style="background: linear-gradient(to right, rgb(15, 149, 155), rgb(6, 74, 80)); color: rgb(255, 255, 255); padding: 14px 1.2rem; border: none; min-width: 150px; font-weight: 500;">-->
+                            <!--                                <p><a href="addcart.php?id=-->
+                            <?php //echo $dsproductId['id'] ?><!--"><i-->
+                            <!--                                                class="fa fa-shopping-basket"> </i></a></p>-->
+                            <!--                            </div>-->
                         </form>
                     </div>
                 </div>
@@ -517,10 +528,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php require_once __DIR__ . "/layouts/footer.php"; ?>
 
 <script type="text/javascript">
-    Date.prototype.toDateInputValue = (function() {
+    Date.prototype.toDateInputValue = (function () {
         var local = new Date(this);
         local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-        return local.toJSON().slice(0,10);
+        return local.toJSON().slice(0, 10);
     });
 
     $(document).ready(function () {
@@ -556,7 +567,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     };
 
-    function update_day_count(){
+    function update_day_count() {
         let $datetime1 = new Date($("#time_start_input").val());
         let $datetime2 = new Date($("#time_stop_input").val());
         let $interval = ($datetime2.getTime() - $datetime1.getTime()) / (1000 * 3600 * 24) + 1;

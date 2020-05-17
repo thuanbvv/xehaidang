@@ -75,6 +75,9 @@
     <!--CÁC BẠN CHÚ Ý SỬA ĐƯỜNG DẪN ĐÚNG THÌ MỚI HIỂN THỊ ĐÚNG NHA CÁC BẠN-->
     <link href="public/frontend/App_Themes/style.css" rel="stylesheet" type="text/css"/>
     <link href="public/frontend/App_Themes/responsive.css" rel="stylesheet" type="text/css"/>
+    <!--  addition for sweetalert2  -->
+    <script src="public/frontend/Scripts/sweetAlert2/sweetalert2.all.min.js"></script>
+    <link href="public/frontend/Scripts/sweetAlert2/sweetalert2.min.css">
 
 </head>
 <!--BODY BAO QUÁT TẤT CẢ NỘI DUNG CỦA TRANG-->

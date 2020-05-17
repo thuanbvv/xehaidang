@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/autoload/autoload.php";
+require_once __DIR__ . "/layouts/header.php";
 $data =
     [
         'email' => postInput("email"),
@@ -20,14 +21,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['name_id'] = $is_check['id'];
             $_SESSION['user'] = $is_check;
             $redirect_location = "index.php";
-            echo " <script>alert(' Đăng nhập thành công ');location.href='$redirect_location' </script> ";
+            echo " <script>Swal.fire({type: 'success', title: 'Success', text: 'Đăng nhập thành công!', timer: 1300,showLoaderOnConfirm: true,closeOnConfirm: false}).then(function() {
+                window.location.href='$redirect_location';                              
+            });</script> ";
         } else {
-            $_SESSION['error'] = "Đăng nhập thất bại";
+            $_SESSION['error'] = "Đăng nhập thất bại, sai tên đăng nhập hoặc mật khẩu";
         }
     }
 }
 ?>
-<?php require_once __DIR__ . "/layouts/header.php"; ?>
 <div class="main">
     <div class="container">
         <!--NỘI DUNG TRANG ĐĂNG KÝ , PHẦN NÀY SẼ THAY ĐỔI THEO TRANG -->

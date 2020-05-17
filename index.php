@@ -13,6 +13,7 @@ require_once __DIR__ . "/autoload/autoload.php";
 
 <?php require_once __DIR__ . "/layouts/footer.php"; ?>
 <!--hiển thị menu TRANG INDEX.PHP-->
+
 <script type="text/javascript">
     $(document).ready(function () {
         $(".menu-quick-select ul").hide();
@@ -21,5 +22,10 @@ require_once __DIR__ . "/autoload/autoload.php";
         }, function () {
             $(".menu-quick-select ul").hide();
         });
+        // Swal.fire({
+        //     type: 'error',
+        //     title: 'Oops...',
+        //     text: 'Something went wrong!',
+        // })
     });
 </script>
