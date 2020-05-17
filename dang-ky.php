@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $id_insert = $db->insert("users", $data);
         if ($id_insert > 0) {
             $_SESSION['success'] = "Đăng ký thành công ! Mời sang trang đăng nhập để nhập ";
-            header("localtion: dang-nhap.php");
+            header("location: dang-nhap.php");
         } else {
 
         }
