@@ -112,14 +112,14 @@
 
 
                     <li>
-                        <a href="#"><i class="fa fa-files-o fa-fw"></i> Trang liên quan<span
-                                    class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-
-                            <li>
-                                <a href="trang-chu.php">Thoát trang</a>
-                            </li>
-                        </ul>
+<!--                        <a href="#"><i class="fa fa-files-o fa-fw"></i> Trang liên quan<span-->
+<!--                                    class="fa arrow"></span></a>-->
+<!--                        <ul class="nav nav-second-level">-->
+<!---->
+<!--                            <li>-->
+<!--                                <a href="trang-chu.php">Thoát trang</a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
                         <!-- /.nav-second-level -->
                     </li>
                 </ul>
