@@ -1,5 +1,6 @@
 <?php
     require_once __DIR__ . "/autoload/autoload.php";
+    require_once __DIR__ . "/layouts/header.php";
     $sqlDoanhThu = "SELECT SUM(amount) AS total_money FROM transaction  WHERE status = 2";
     $totalMoney = $db->fetchsql($sqlDoanhThu);
 
@@ -52,8 +53,6 @@
     $totalMonth12 = $db->fetchsql($sqlMonth12);
 
 ?>
-
-<?php require_once __DIR__ . "/layouts/header.php"; ?>
 
 <div id="page-wrapper">
     <div class="row">

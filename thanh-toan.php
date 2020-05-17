@@ -30,7 +30,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     unset($_SESSION['cart']);
     if (!empty($listId)) {
-        echo " <script>alert('Bạn đã xác nhận đặt hành thành công chúng tôi sẽ liên hệ giao xe sớm nhất có thể cho bạn');location.href='index.php' </script> ";
+        echo "<script> Swal.fire({type: 'success', title: 'Thông báo', text: 'Bạn đã xác nhận đặt hành thành công chúng tôi sẽ liên hệ giao xe sớm nhất có thể cho bạn', timer: 1300,showLoaderOnConfirm: true,closeOnConfirm: false}).then(function() {
+                window.location.href='index.php';                              
+            }); </script> ";
     }
 }
 

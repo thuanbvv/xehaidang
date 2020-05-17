@@ -1,36 +1,7 @@
 <?php
 session_start();
-require_once __DIR__ . "/../libraries/database.php";
-require_once __DIR__ . "/../libraries/function.php";
-$db = new database;
-$error = [];
-$data =
-    [
-        'email' => postInput("email"),
-        'password' => postInput("password")
-    ];
-
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    if ($data['email'] == '') {
-        $error['email'] = "Email không được để chống";
-    }
-
-    if ($data['password'] == '') {
-        $error['password'] = "Mật khẩu không được để chống";
-    }
-    if (empty($error)) {
-        $is_check = $db->fetchOne("admin", "email= '" . $data['email'] . "' AND password = '" . MD5($data['password']) . "' ");
-
-        if ($is_check != NULL) {
-            $_SESSION['admin_name'] = $is_check['name'];
-            $_SESSION['admin_id'] = $is_check['id'];
-            echo " <script>alert(' Đăng nhập thành công');location.href='/xehaidang/admin' </script> ";
-        } else {
-            $_SESSION['error'] = "Đăng nhập thất bại";
-        }
-    }
-}
 ?>
+
 <!DOCTYPE html>
 <html>
 <style type="text/css">
@@ -121,6 +92,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
           integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <!--  addition for sweetalert2  -->
+    <script src="../public/frontend/Scripts/sweetAlert2/sweetalert2.all.min.js"></script>
+    <link href="../public/frontend/Scripts/sweetAlert2/sweetalert2.min.css">
 </head>
 <body>
 <div class="container h-100">
@@ -172,3 +146,38 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 </div>
 </body>
 </html>
+
+<?php
+require_once __DIR__ . "/../libraries/database.php";
+require_once __DIR__ . "/../libraries/function.php";
+$db = new database;
+$error = [];
+$data =
+    [
+        'email' => postInput("email"),
+        'password' => postInput("password")
+    ];
+
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    if ($data['email'] == '') {
+        $error['email'] = "Email không được để chống";
+    }
+
+    if ($data['password'] == '') {
+        $error['password'] = "Mật khẩu không được để chống";
+    }
+    if (empty($error)) {
+        $is_check = $db->fetchOne("admin", "email= '" . $data['email'] . "' AND password = '" . MD5($data['password']) . "' ");
+
+        if ($is_check != NULL) {
+            $_SESSION['admin_name'] = $is_check['name'];
+            $_SESSION['admin_id'] = $is_check['id'];
+            echo " <script> Swal.fire({type: 'success', title: 'Success', text: 'Đăng nhập thành công!', timer: 1300,showLoaderOnConfirm: true,closeOnConfirm: false}).then(function() {
+                window.location.href='/xehaidang/admin';                              
+            }); </script> ";
+        } else {
+            $_SESSION['error'] = "Đăng nhập thất bại";
+        }
+    }
+}
+?>

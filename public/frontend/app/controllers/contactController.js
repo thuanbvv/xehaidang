@@ -23,8 +23,9 @@
         contactService.sendContact(obj, $scope.sendContactCompleted, $scope.sendContactError);
     }
     $scope.sendContactCompleted = function (response) {
-        alert("Cảm ơn bạn đã gửi liên hệ đến chúng tôi.");
-        $window.location.href = "/trang-chu.html";
+        Swal.fire({type: 'success', title: 'Thông báo', text: 'Cảm ơn bạn đã liên hệ với chúng tôi', timer: 1300,showLoaderOnConfirm: true,closeOnConfirm: false}).then(function() {
+            window.location.href='/trang-chu.html';
+        });
     }
     $scope.sendContactError = function (response) {
         alert(response.Message);
