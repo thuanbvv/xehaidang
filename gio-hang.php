@@ -110,7 +110,7 @@ if (!isset($_SESSION['cart']) || count($_SESSION['cart']) == 0) {
                                     <td><?php echo formatPrice($value['price']) ?></td>
                                     <td><?php echo formatPrice($value['price'] * $value['qty']) ?></td>
                                     <td>
-                                        <button href="remote.php?key=<?php echo $key ?>&action=0" class="btn btn-xs btn-danger"><i
+                                        <button type="submit" onclick="location.href='remote.php?key=<?php echo $key ?>&action=0'" class="btn btn-xs btn-danger button-submit"><i
                                                     class="fa fa-remove"></i> Bỏ</button>
                                     </td>
                                 </tr>

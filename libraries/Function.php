@@ -259,7 +259,8 @@ function getNumberDay($dateStart, $dateEnd)
 function getDay($expiryDate)
 {
     $dateNow = date('Y-m-d H:i:s'); //current date
-    return (strtotime($expiryDate) - strtotime($dateNow)) / (60 * 60 * 24);
+    return getNumberDay($expiryDate, $dateNow);
+//    return (int)(strtotime($expiryDate) - strtotime($dateNow)) / (60 * 60 * 24);
 }
 
 ?>

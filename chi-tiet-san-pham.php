@@ -31,16 +31,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pick_end = postInput("time_stop");
 
     // Check xe đã đặt hay chưa
-    $transaction = $db->fetchOne('transaction', ' product_id =  ' . $id . ' and status != 2 and ((time_start <= \''
+    $transaction = $db->fetchsql('select * from transaction where product_id =  ' . $id . ' and status != 2 and ((time_start <= \''
         .$pick_begin. '\' and time_stop >= \'' .$pick_end. '\') or ( time_start >= \'' . $pick_begin . '\' and time_start <= \'' . $pick_end
         . '\') or (time_stop >= \'' . $pick_begin . '\' and time_stop <= \'' .$pick_end. '\')) ');
 
-    if ($transaction) {
-        $from_time = $transaction['time_start'];
-        $to_time = $transaction['time_stop'];
-        echo " <script>alert(' Xe đã có người đặt trong khoảng thời gian ' + `$from_time` + ' đến ' +  `$to_time` +   '. Xin vui lòng đặt xe khác hoặc chọn lại thời gian'); window.location.href = 'index.php' </script> ";
+    $product_quantity = $db->fetchsql("select number from product where id = " . $id);
+    var_dump($transaction);
+    var_dump($product_quantity[0]["number"]);
+
+    if ($transaction && (sizeof($transaction) >= (int)$product_quantity[0]["number"])) {
+//        $to_time = $transaction['time_stop'];
+//        $from_time = $transaction['time_start'];
+        echo " <script>alert(' Xe đã đặt hết. Xin vui lòng đặt xe khác hoặc chọn lại thời gian'); window.location.href = 'index.php' </script> ";
     }else{
-        
+
 
         $errors = [];
         if (postInput('time_start') == '') {
@@ -56,8 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $datenow2 = getDay(postInput('time_stop'));
         $interval = $datetime1->diff($datetime2);
 
-        
-        
+
+        var_dump($datenow1);
         if ($datenow1 < 0){
             $errors['time_start'] = "Ngày nhận xe không hợp lệ";
         }
@@ -82,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $data['users_id'] = $_SESSION['name_id'];
             $data['number_day'] = $interval->d;
             $id_insert = $db->insert("transaction", $data);
-            $id_insert = 1;
+//            $id_insert = 1;
             if ($id_insert > 0) {
                 $push_cart_status = add_to_cart($db, $id, $interval->d, $id_insert, postInput('time_start'), postInput('time_stop'));
                 if ($push_cart_status == 0){
